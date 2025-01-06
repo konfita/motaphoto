@@ -1,0 +1,124 @@
+/*
+Theme Name: Motaphoto Child
+Template: twentytwentythree
+*/
+.photo-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.photo-item h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.photo-meta p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Conteneur principal */
+.photo-gallery {
+    margin: 20px auto;
+    max-width: 800px; /* Limite la largeur de la galerie */
+    text-align: center;
+}
+
+/* Grille des photos */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Deux colonnes */
+    gap: 20px; /* Espacement entre les photos */
+}
+
+/* Chaque élément de la grille */
+.photo-item {
+    position: relative;
+    width: 100%; /* Prend la largeur disponible */
+    padding-top: 100%; /* Maintient un ratio 1:1 pour le carré */
+    overflow: hidden; /* Masque les parties de l'image qui dépassent */
+    border-radius: 8px; /* Coins arrondis pour l'ensemble du conteneur */
+    background-color: #f3f3f3; /* Couleur de fond par défaut */
+}
+
+.photo-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recadre l'image pour remplir tout le carré sans déformation */
+    border-radius: 8px; /* Coins arrondis pour l'image */
+}
+
+
+.photo-item:hover {
+    transform: scale(1.05); /* Zoom léger au survol */
+}
+
+/* Bouton "Afficher plus" */
+.btn-load-more {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-load-more:hover {
+    background-color: #005177;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between; /* Sépare les filtres à gauche et à droite */
+    align-items: flex-end; /* Aligne les éléments en bas */
+    margin-bottom: 20px;
+}
+
+/* Filtres à gauche */
+.filters-left {
+    display: flex;
+    gap: 20px; /* Espacement horizontal entre les champs */
+}
+
+/* Filtres à droite */
+.filters-right {
+    display: flex;
+    align-items: flex-end;
+}
+
+/* Champ de filtre général */
+.filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.filter select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.filter select:focus {
+    outline: 2px solid #007bff;
+}
+
+.filters select {
+    min-width: 150px;
+}
