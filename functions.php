@@ -2,8 +2,26 @@
 // Chargement du CSS du thème parent
 function motaphoto_child_enqueue_styles() {
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+    wp_enqueue_style('parent-style', get_template_directory_uri() . '/styleheader.css');
 }
 add_action('wp_enqueue_scripts', 'motaphoto_child_enqueue_styles');
+
+// Enregistrement des menus
+function motaphoto_register_menus() {
+    register_nav_menus(array(
+        'primary' => __('Menu Principal', 'motaphoto-child'),
+    ));
+}
+add_action('init', 'motaphoto_register_menus');
+;
+
+// Enqueue des fichiers JS et CSS 
+function enqueue_contact_modal_assets() {
+    wp_enqueue_style('modal-style', get_stylesheet_directory_uri() . '/style.css');
+    wp_enqueue_script('modal-script', get_stylesheet_directory_uri() . '/scripts.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_contact_modal_assets');
+
 
 // Enregistrement du type de contenu personnalisé "Photos"
 function register_photos_cpt() {
@@ -122,3 +140,14 @@ function load_and_filter_photos() {
 }
 add_action('wp_ajax_load_and_filter_photos', 'load_and_filter_photos');
 add_action('wp_ajax_nopriv_load_and_filter_photos', 'load_and_filter_photos');
+
+function theme_scripts() {
+    wp_enqueue_script('menu-script', get_stylesheet_directory_uri() . '/menu.js', array(), null, true);
+}
+add_action('wp_enqueue_scripts', 'theme_scripts');
+function register_menus() {
+    register_nav_menus(array(
+        'main-menu' => __('Main Menu', 'motaphoto'),
+    ));
+}
+add_action('init', 'register_menus');

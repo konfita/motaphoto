@@ -1,6 +1,9 @@
 <?php
 // Inclure le header
-get_header(); ?>
+get_header(); 
+?>
+
+<button id="open-modal">Contactez-nous</button>
 
 <form id="filters-form" method="GET" class="filters">
     <!-- Filtres à gauche -->
@@ -39,66 +42,9 @@ get_header(); ?>
     </div>
 </form>
 
-<div class="photo-gallery">
-    <div class="photo-grid">
-        <?php
-        // Récupérer les filtres
-        $categorie = isset($_GET['categorie']) ? sanitize_text_field($_GET['categorie']) : '';
-        $format = isset($_GET['format']) ? sanitize_text_field($_GET['format']) : '';
-
-        // Construire la requête
-        $meta_query = array('relation' => 'AND');
-        if ($categorie) {
-            $meta_query[] = array(
-                'key' => 'categories',
-                'value' => $categorie,
-                'compare' => '='
-            );
-        }
-        if ($format) {
-            $meta_query[] = array(
-                'key' => 'formats',
-                'value' => $format,
-                'compare' => '='
-            );
-        }
-
-        // Requête WP_Query
-        $args = array(
-            'post_type' => 'photos',
-            'posts_per_page' => 8,
-            'meta_query' => $meta_query,
-        );
-        $query = new WP_Query($args);
-
-        // Boucle WordPress
-        if ($query->have_posts()) :
-            while ($query->have_posts()) : $query->the_post(); ?>
-                <div class="photo-item">
-                    <?php
-                    if (has_post_thumbnail()) {
-                        $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
-                        ?>
-                        <a href="<?php echo esc_url($thumbnail_url); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
-                            <?php the_post_thumbnail('medium'); ?>
-                        </a>
-                    <?php } ?>
-                    <h2><?php the_title(); ?></h2>
-                </div>
-            <?php endwhile;
-        else :
-            echo '<p>Aucune photo trouvée.</p>';
-        endif;
-
-        // Réinitialiser les données post
-        wp_reset_postdata();
-        ?>
-    </div>
-
-    <!-- Bouton "Afficher plus" avec data-url -->
-    <button id="load-more" class="btn-load-more" data-url="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>">Afficher plus</button>
-    
-</div>
+<section class="photo-gallery">
+    <?php get_template_part('template-parts/photo-gallery'); ?>
+</section>
 
 <?php
 // Inclure le footer
