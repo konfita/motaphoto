@@ -1,12 +1,26 @@
-<div id="contact-modal" class="contact-modal">
-    <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2>Contact</h2>
-        <div class="form-container">
-            <!-- Ajoutez ici le shortcode du formulaire Contact Form 7 -->
-            <?php echo do_shortcode('[contact-form-7 id="353aa62" title="Formulaire de contact 1"]'); ?>
-        </div>
+<div class="modale" id="modale-container">
+  <div class="modale__content">
+    <button class="modale__content__close btn-close" id="close-modale" type="button">
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/images/close_icon.png" alt="Croix de fermeture" />
+    </button>
+    <div class="modale__content__header">
+      <div class="modale__content__header__line">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+      </div>
+      <div class="modale__content__header__line">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/contact_texte.png" alt="Contact" />
+      </div>
     </div>
+    <div class="modale__content__form">
+      <?php echo apply_shortcodes( '[contact-form-7 id="b167023" title="contact"]' ); ?>
+    </div>
+  </div>
 </div>
-
-<button id="open-modal">Contactez-nous</button>

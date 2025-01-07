@@ -4,6 +4,11 @@
 Theme Name: Motaphoto Child
 Template: twentytwentythree
 */
+/* Police site  */
+body {
+    font-family: 'Space Mono', monospace, sans-serif;
+}
+
 /* header  */
 .site-header {
     display: flex;
@@ -108,6 +113,49 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #999;
 }
+
+/* Photo d'accueil  */
+nav {
+    display: flex;
+    font-family: "Space Mono", monospace;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+  
+  nav .menu {
+    display: flex;
+  }
+  
+  nav li:hover {
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .hero {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+  }
+  
+  .hero h1 {
+    align-self: center;
+    position: absolute;
+    font-family: "Space Mono", monospace;
+    font-style: italic;
+    font-size: 6.3vw;
+    text-transform: uppercase;
+    text-shadow: 3px 0 #fff, -3px 0 #fff, 0 3px #fff, 0 -3px #fff, 3px 3px #fff, -3px -3px #fff, 3px -3px #fff, -3px 3px #fff;
+    mix-blend-mode: lighten;
+  }
+  
+  .hero__background {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  
 /* Bloc photos  */
 .photo-list {
     display: grid;
@@ -130,7 +178,7 @@ input[type="submit"]:hover {
 /* Conteneur principal */
 .photo-gallery {
     margin: 20px auto;
-    max-width: 800px; /* Limite la largeur de la galerie */
+    max-width: 1220px; /* Limite la largeur de la galerie */
     text-align: center;
 }
 
@@ -185,7 +233,9 @@ input[type="submit"]:hover {
     display: flex;
     justify-content: space-between; /* Sépare les filtres à gauche et à droite */
     align-items: flex-end; /* Aligne les éléments en bas */
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 /* Filtres à gauche */
@@ -230,45 +280,54 @@ input[type="submit"]:hover {
     min-width: 150px;
 }
 
-/* Footer */
+
 /* Footer */
 .footer {
-    background-color: #f5f5f5; /* Couleur de fond */
-    border-top: 1px solid #ccc; /* Ligne de séparation */
-    padding: 10px 0;
-    text-align: center; /* Centrer le texte */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 7px 0;
+    border-top: 1px solid black;
+    z-index: 0;
 }
-
-.footer__nav {
-    margin: 0;
+  
+/* Flexbox pour le menu footer par défaut (desktop) */
+.footer__nav .footer-menu {
+    display: flex; /* Affichage en ligne */
+    justify-content: center !important; /* Centrer horizontalement */
     padding: 0;
+    margin: 0;
 }
 
-.footer__menu {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Espacement entre les éléments */
+.footer__nav .footer-menu li {
+    min-width: 196px; /* Largeur minimale des éléments du menu */
     list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
-.footer__menu li {
-    margin: 0;
+/* Espacement spécifique pour le deuxième élément dans le menu */
+.footer__nav .footer-menu li:nth-child(2) {
+    margin-left: 86px;
 }
 
-.footer__menu a {
-    text-decoration: none; /* Retirer le soulignement */
-    color: #000; /* Couleur du texte */
-    font-size: 14px;
-    text-transform: uppercase; /* Majuscules */
-    font-weight: 600;
+/* Responsive : afficher le menu en colonne pour les écrans plus petits (moins de 1000px) */
+@media screen and (max-width: 1000px) {
+    .footer {
+      text-align: center;
+      padding: 43px 0;
+    }
+  
+    /* Modifier la disposition du menu en colonne sur mobile */
+    .footer__nav .footer-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    /* Ajustement des marges pour le deuxième élément */
+    .footer__nav .footer-menu li:nth-child(2) {
+      margin: 24px 0;
+    }
 }
-
-.footer__menu a:hover {
-    text-decoration: underline; /* Soulignement au survol */
-}
-
 
 /* Ajustement mobile  */
 /* Menu responsive */

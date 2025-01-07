@@ -22,6 +22,11 @@
                     'fallback_cb'    => false,
                 ));
                 ?>
+                <ul>
+                    <li><a href="#" id="contactLink">CONTACT</a></li>
+                </ul>
             </nav>
+            <?php get_template_part('modal'); ?>
+
         </header>
         <main id="main" class="site-main">

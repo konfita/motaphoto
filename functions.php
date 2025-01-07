@@ -1,8 +1,13 @@
 <?php
+// Chargement de la police du site 
+function enqueue_custom_fonts() {
+    wp_enqueue_style('space-mono-font', 'https://fonts.googleapis.com/css2?family=Space+Mono&display=swap', false);
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_fonts');
+
 // Chargement du CSS du thème parent
 function motaphoto_child_enqueue_styles() {
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
-    wp_enqueue_style('parent-style', get_template_directory_uri() . '/styleheader.css');
 }
 add_action('wp_enqueue_scripts', 'motaphoto_child_enqueue_styles');
 
@@ -151,3 +156,9 @@ function register_menus() {
     ));
 }
 add_action('init', 'register_menus');
+
+function register_footer_menu() {
+    register_nav_menu('footer', __('Footer Menu', 'motaphoto'));
+}
+add_action('after_setup_theme', 'register_footer_menu');
+

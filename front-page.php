@@ -3,7 +3,10 @@
 get_header(); 
 ?>
 
-<button id="open-modal">Contactez-nous</button>
+<div class="hero">
+    <img class="hero__background" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/nathalie-11.jpeg" alt="Photo d'événement">
+    <h1>Photographe Event</h1>
+</div>
 
 <form id="filters-form" method="GET" class="filters">
     <!-- Filtres à gauche -->
