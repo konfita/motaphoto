@@ -26,9 +26,5 @@
                     <li><a href="#" id="contactLink">CONTACT</a></li>
                 </ul>
             </nav>
-
-            <!-- Modale de contact -->
-            <?php get_template_part('modale'); ?>
-
         </header>
         <main id="main" class="site-main">

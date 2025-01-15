@@ -220,4 +220,3 @@ function register_my_menus() {
         'footer_menu' => __('Footer Menu', 'motaphoto'),
     ));
 }
-add_action('init', 'register_my_menus');

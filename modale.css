@@ -96,36 +96,76 @@
 
 @media screen and (max-width: 1000px) {
   .modale__content {
-    height: 95%;
-    width: 90%;
+    width: 597px;
+    height: 759px;
+    border: 5px solid black;
+    overflow-x: hidden;
+    background-color: white;
   }
   .modale__content__close {
-    margin-left: 89%;
-    margin-top: -15px;
+    margin-left: 598px;
+    margin-top: -44px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 50%;
   }
   .modale__content__close img {
     padding: 70%;
-    padding: 0;
+    border-radius: 50%;
+    transition: all 200ms;
   }
   .modale__content__close img:hover {
-    background: none;
+    background-color: rgba(0, 0, 0, 0.5);
   }
   .modale__content__header {
-    margin-bottom: -24px;
+    padding-top: 8px;
+    padding-bottom: 22px;
+  }
+  .modale__content__header__line {
+    display: inline-flex;
   }
   .modale__content__header__line img {
-    width: 140px;
-    height: 24px;
+    width: 280px;
+    height: 48px;
+  }
+  .modale__content__header__line:first-child {
+    animation: textLoop 10s linear infinite;
+  }
+  .modale__content__header__line:last-child {
+    animation: textLoop 10s -5s linear reverse infinite;
   }
   .modale__content form {
-    width: 66%;
-    margin-bottom: 10px;
+    width: 44%;
+    margin: auto;
   }
-  .modale__content form > p:first-child {
-    margin-top: 0;
+  .modale__content form p {
+    margin-top: 24px;
+  }
+  .modale__content form label {
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  .modale__content form input {
+    height: 40px;
+    padding: 0 2%;
+    text-transform: uppercase;
+  }
+  .modale__content form textarea {
+    padding: 2%;
+    height: 132px;
+  }
+  .modale__content form input,
+  .modale__content form textarea {
+    width: 96%;
+    resize: none;
+    border: 1px solid black;
+    border-radius: 0;
   }
   .modale__content form .bouton {
-    width: 100%;
+    width: 81%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 37px;
+    border: none;
   }
 }
 

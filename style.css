@@ -113,6 +113,7 @@ nav {
     height: 100vh;
     display: flex;
     justify-content: center;
+    margin-bottom: 60px;
   }
   
   .hero h1 {
@@ -155,6 +156,7 @@ nav {
 .photo-gallery {
     margin: 20px auto;
     width: 1200px;
+    max-width: 1220px; /* Limite la largeur de la galerie */
     text-align: center;
 }
 
@@ -213,6 +215,9 @@ nav {
     margin-bottom: 20px;
     margin-left: 110px;
     margin-right: 110px;
+    margin-bottom: 40px;
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 /* Filtres à gauche */
@@ -274,20 +279,35 @@ nav {
 }
 .footer__nav {
     margin: 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 7px 0;
+    border-top: 1px solid black;
+    z-index: 0;
+}
+  
+/* Flexbox pour le menu footer par défaut (desktop) */
+.footer__nav .footer-menu {
+    display: flex; /* Affichage en ligne */
+    justify-content: center !important; /* Centrer horizontalement */
     padding: 0;
+    margin: 0;
 }
 
 .footer__menu {
     display: flex;
     justify-content: center;
     gap: 60px; /* Espacement entre les éléments */
+}
+.footer__nav .footer-menu li {
+    min-width: 196px; /* Largeur minimale des éléments du menu */
     list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
-.footer__menu li {
-    margin: 0;
+/* Espacement spécifique pour le deuxième élément dans le menu */
+.footer__nav .footer-menu li:nth-child(2) {
+    margin-left: 86px;
 }
 
 .footer__menu a {
@@ -297,11 +317,25 @@ nav {
     text-transform: uppercase; /* Majuscules */
     font-weight: 400;
 }
-
-.footer__menu a:hover {
-    text-decoration: underline; /* Soulignement au survol */
+/* Responsive : afficher le menu en colonne pour les écrans plus petits (moins de 1000px) */
+@media screen and (max-width: 1000px) {
+    .footer {
+      text-align: center;
+      padding: 43px 0;
+    }
+  
+    /* Modifier la disposition du menu en colonne sur mobile */
+    .footer__nav .footer-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    /* Ajustement des marges pour le deuxième élément */
+    .footer__nav .footer-menu li:nth-child(2) {
+      margin: 24px 0;
+    }
 }
-
 
 /* Ajustement mobile  */
 /* Menu responsive */
