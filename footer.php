@@ -1,7 +1,7 @@
 </main>
 
 <footer class="footer">
-  <div class="container">
+  <div class="footer-container">
     <nav class="footer__nav">
       <?php
         if (has_nav_menu('footer_menu')) {
@@ -15,6 +15,7 @@
     </nav>
     <?php wp_footer(); ?>
   </div>
+
 </footer>
 
 </body>

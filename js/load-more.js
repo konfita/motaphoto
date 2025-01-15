@@ -6,15 +6,15 @@ jQuery(document).ready(function($) {
             url: ajax_params.ajax_url,
             type: 'POST',
             data: {
-                action: 'load_more_photos',
+                action: 'load_more_photos', // Nom de l'action
                 page: page,
             },
             success: function(response) {
-                if (response) {
-                    $('.photo-grid').append(response); // Ajoute les nouvelles photos
+                if (response === 'no_more_posts') {
+                    $('#load-more').hide(); // Masquer le bouton s'il n'y a plus de posts
+                } else if (response) {
+                    $('.photo-grid').append(response);
                     page++;
-                } else {
-                    $('#load-more').hide(); // Cache le bouton si plus de photos
                 }
             }
         });

@@ -15,20 +15,17 @@
 .modale__content {
   width: 597px;
   height: 759px;
-  border: 5px solid black;
+  border: 5px solid rgb(184, 180, 180);
   overflow-x: hidden;
   background-color: white;
 }
 .modale__content__close {
-  margin-left: 598px;
-  margin-top: -44px;
+  margin-left: 500px;
+  margin-top: 20px;
   background-color: rgba(0, 0, 0, 0);
-  border-radius: 50%;
 }
 .modale__content__close img {
-  padding: 70%;
   border-radius: 50%;
-  transition: all 200ms;
 }
 .modale__content__close img:hover {
   background-color: rgba(0, 0, 0, 0.5);
@@ -45,13 +42,13 @@
   height: 48px;
 }
 .modale__content__header__line:first-child {
-  animation: textLoop 10s linear infinite;
+  animation: textLoop 20s linear infinite;
 }
 .modale__content__header__line:last-child {
-  animation: textLoop 10s -5s linear reverse infinite;
+  animation: textLoop 20s -5s linear reverse infinite;
 }
 .modale__content form {
-  width: 44%;
+  width: 70%;
   margin: auto;
 }
 .modale__content form p {
@@ -129,5 +126,14 @@
   }
   .modale__content form .bouton {
     width: 100%;
+  }
+}
+
+@keyframes textLoop {
+  0% {
+      transform: translateX(0);
+  }
+  100% {
+      transform: translateX(-100%);
   }
 }

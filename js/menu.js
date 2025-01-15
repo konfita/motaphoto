@@ -3,11 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.querySelector('.mobile-menu-overlay');
     const menuClose = document.querySelector('.menu-close');
 
-    menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-    });
+    if (menuToggle && mobileMenu && menuClose) {
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
 
-    menuClose.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-    });
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+    } else {
+        console.error("Un ou plusieurs éléments du menu mobile n'existent pas dans le DOM.");
+    }
 });
