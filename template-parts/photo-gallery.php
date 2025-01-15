@@ -1,22 +1,22 @@
 <div class="photo-gallery">
     <div class="photo-grid">
         <?php
-        // Récupérer les filtres
-        $categorie = isset($_GET['categorie']) ? sanitize_text_field($_GET['categorie']) : '';
-        $format = isset($_GET['format']) ? sanitize_text_field($_GET['format']) : '';
+        // Récupérer les filtres via AJAX (POST) ou via l'URL (GET)
+        $categorie = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : (isset($_GET['categorie']) ? sanitize_text_field($_GET['categorie']) : '');
+        $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : (isset($_GET['format']) ? sanitize_text_field($_GET['format']) : '');
 
         // Construire la requête
         $meta_query = array('relation' => 'AND');
         if ($categorie) {
             $meta_query[] = array(
-                'key' => 'categories',
+                'key' => 'categorie',
                 'value' => $categorie,
                 'compare' => '='
             );
         }
         if ($format) {
             $meta_query[] = array(
-                'key' => 'formats',
+                'key' => 'format',
                 'value' => $format,
                 'compare' => '='
             );
@@ -28,6 +28,23 @@
             'posts_per_page' => 8,
             'meta_query' => $meta_query,
         );
+
+        // Appliquer le tri si nécessaire
+        $sort_by = isset($_POST['sort_by']) ? sanitize_text_field($_POST['sort_by']) : (isset($_GET['sort_by']) ? sanitize_text_field($_GET['sort_by']) : 'date_desc');
+        if ($sort_by === 'date_asc') {
+            $args['orderby'] = 'date';
+            $args['order'] = 'ASC';
+        } elseif ($sort_by === 'date_desc') {
+            $args['orderby'] = 'date';
+            $args['order'] = 'DESC';
+        } elseif ($sort_by === 'title_asc') {
+            $args['orderby'] = 'title';
+            $args['order'] = 'ASC';
+        } elseif ($sort_by === 'title_desc') {
+            $args['orderby'] = 'title';
+            $args['order'] = 'DESC';
+        }
+
         $query = new WP_Query($args);
 
         // Boucle WordPress
@@ -55,6 +72,5 @@
     </div>
 
     <!-- Bouton "Afficher plus" avec data-url -->
-    <button id="load-more" class="btn-load-more" data-url="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>">Afficher plus</button>
-    
+    <button id="load-more" class="btn-load-more" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">Afficher plus</button>
 </div>

@@ -43,8 +43,6 @@ get_header();
     </div>
 </form>
 
-
-
 <section class="photo-gallery">
     <?php get_template_part('template-parts/photo-gallery'); ?>
 </section>

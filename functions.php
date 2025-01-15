@@ -47,12 +47,14 @@ add_action('wp_enqueue_scripts', 'theme_scripts');
 function enqueue_contact_modale_assets() {
     wp_enqueue_script('modale-script', get_stylesheet_directory_uri() . '/js/scripts.js', array('jquery'), null, true);
     wp_enqueue_script('filters-js', get_stylesheet_directory_uri() . '/js/filters.js', ['jquery'], null, true);
+
+    // Localiser le script AJAX 
+    wp_localize_script('filters-js', 'ajax_params', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+    ));
+
 }
 add_action('wp_enqueue_scripts', 'enqueue_contact_modale_assets');
-
-wp_localize_script('filters-js', 'ajax_params', array(
-    'ajax_url' => admin_url('admin-ajax.php'),
-));
 
 function enqueue_lightbox_scripts() {
     // Enqueue Lightbox CSS
@@ -141,77 +143,11 @@ add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
 
 // Fonction pour filtrer et charger des photos via AJAX
 function load_and_filter_photos() {
-    // Récupération des données envoyées via AJAX
-    parse_str($_POST['form_data'], $form_data);
-
-    $categorie = $form_data['categorie'] ?? '';
-    $format = $form_data['format'] ?? '';
-    $tri = $form_data['sort_by'] ?? 'date_desc';
-
-    // Construire la requête WP_Query
-    $args = [
-        'post_type' => 'photo', // Assurez-vous que c'est le type de contenu correct
-        'posts_per_page' => -1,
-    ];
-
-    // Filtrer par catégorie
-    if (!empty($categorie)) {
-        $args['tax_query'][] = [
-            'taxonomy' => 'category',
-            'field' => 'slug',
-            'terms' => $categorie,
-        ];
-    }
-
-    // Filtrer par format (si "format" est un champ personnalisé)
-    if (!empty($format)) {
-        $args['meta_query'][] = [
-            'key' => 'format',
-            'value' => $format,
-            'compare' => '=',
-        ];
-    }
-
-    // Appliquer le tri
-    if ($tri === 'date_asc') {
-        $args['orderby'] = 'date';
-        $args['order'] = 'ASC';
-    } elseif ($tri === 'date_desc') {
-        $args['orderby'] = 'date';
-        $args['order'] = 'DESC';
-    } elseif ($tri === 'title_asc') {
-        $args['orderby'] = 'title';
-        $args['order'] = 'ASC';
-    } elseif ($tri === 'title_desc') {
-        $args['orderby'] = 'title';
-        $args['order'] = 'DESC';
-    }
-
-    // Exécuter la requête WP_Query
-    $query = new WP_Query($args);
-
-    // Générer le HTML des résultats
-    if ($query->have_posts()) {
-        ob_start();
-        while ($query->have_posts()) {
-            $query->the_post(); ?>
-            <div class="photo-item">
-                <h3><?php the_title(); ?></h3>
-                <div class="photo-thumbnail">
-                    <?php the_post_thumbnail('medium'); ?>
-                </div>
-            </div>
-        <?php }
-        wp_reset_postdata();
-        $response = ob_get_clean();
-        wp_send_json_success($response);
-    } else {
-        wp_send_json_success('<p>Aucune photo trouvée.</p>');
-    }
-
-    wp_die();
+    // Inclure le fichier photo-gallery.php
+    get_template_part('template-parts/photo-gallery');
+    wp_die(); // Terminer l'exécution de la requête AJAX
 }
 
+// Enregistrer l'action AJAX pour les utilisateurs connectés et non connectés
 add_action('wp_ajax_load_and_filter_photos', 'load_and_filter_photos');
 add_action('wp_ajax_nopriv_load_and_filter_photos', 'load_and_filter_photos');
-
