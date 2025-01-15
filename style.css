@@ -263,77 +263,44 @@ nav {
 }
 
 
-/* Footer */
+/* Styles pour le menu footer */
 .footer {
-    background-color: #f5f5f5; /* Couleur de fond */
-    border-top: 1px solid #ccc; /* Ligne de séparation */
-    padding: 20px 0;
-    text-align: center; /* Centrer le texte */
-}
-
-.footer-container {
-    margin-left: 40px;
-    margin-right: 40px;
     display: flex;
     justify-content: center;
-}
-.footer__nav {
-    margin: 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    padding: 7px 0;
+    height: 40px;
     border-top: 1px solid black;
-    z-index: 0;
 }
-  
-/* Flexbox pour le menu footer par défaut (desktop) */
 .footer__nav .footer-menu {
-    display: flex; /* Affichage en ligne */
-    justify-content: center !important; /* Centrer horizontalement */
-    padding: 0;
+    display: flex; /* Afficher les éléments en ligne */
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    gap: 60px; /* Espacement régulier entre les éléments */
+    padding: 10px;
     margin: 0;
+    list-style: none; /* Supprimer les puces */
 }
 
-.footer__menu {
-    display: flex;
-    justify-content: center;
-    gap: 60px; /* Espacement entre les éléments */
-}
 .footer__nav .footer-menu li {
-    min-width: 196px; /* Largeur minimale des éléments du menu */
-    list-style: none;
+    min-width: auto; /* Supprimer la largeur minimale fixe */
 }
 
-/* Espacement spécifique pour le deuxième élément dans le menu */
-.footer__nav .footer-menu li:nth-child(2) {
-    margin-left: 86px;
-}
-
-.footer__menu a {
+.footer__nav .footer-menu li a {
     text-decoration: none; /* Retirer le soulignement */
     color: #000; /* Couleur du texte */
     font-size: 14px;
-    text-transform: uppercase; /* Majuscules */
+    text-transform: uppercase; /* Texte en majuscules */
     font-weight: 400;
 }
+
 /* Responsive : afficher le menu en colonne pour les écrans plus petits (moins de 1000px) */
 @media screen and (max-width: 1000px) {
-    .footer {
-      text-align: center;
-      padding: 43px 0;
-    }
-  
-    /* Modifier la disposition du menu en colonne sur mobile */
     .footer__nav .footer-menu {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+        flex-direction: column; /* Afficher les éléments en colonne */
+        gap: 20px; /* Espacement réduit entre les éléments */
     }
-  
-    /* Ajustement des marges pour le deuxième élément */
+
     .footer__nav .footer-menu li:nth-child(2) {
-      margin: 24px 0;
+        margin: 0; /* Réinitialiser la marge spécifique */
     }
 }
 
