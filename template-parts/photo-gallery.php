@@ -52,10 +52,11 @@
             while ($query->have_posts()) : $query->the_post(); ?>
                 <div class="photo-item">
                     <?php
-                    if (has_post_thumbnail()) {
-                        $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
-                        ?>
-                        <a href="<?php echo esc_url($thumbnail_url); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
+                        if (has_post_thumbnail()) {
+                            $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
+                            $photo_id = get_the_ID(); // Récupérer l'ID de la photo
+                    ?>
+                        <a href="<?php echo esc_url(get_permalink($photo_id)); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
                             <?php the_post_thumbnail('medium'); ?>
                         </a>
                     <?php } ?>

@@ -26,8 +26,19 @@ function motaphoto_enqueue_styles() {
         array('main-style'), // Dépend du style principal
         '1.0.0'
     );
+    // Vérifie si le fichier simple-photo.php est utilisé
+    if (is_page_template('simple-photo.php')) {
+        // Enregistre et charge le fichier CSS
+        wp_enqueue_style(
+            'motaphoto-child-style-photo', // Identifiant unique
+            get_stylesheet_directory_uri() . '/style_photo.css', // Chemin vers le fichier CSS
+            array(), // Dépendances (ici, aucune)
+            filemtime(get_stylesheet_directory() . '/style_photo.css') // Version basée sur la date de modification
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'motaphoto_enqueue_styles');
+
 
 // Enregistrement des menus (principal et footer)
 function motaphoto_register_menus() {
@@ -43,7 +54,7 @@ function theme_scripts() {
 }
 add_action('wp_enqueue_scripts', 'theme_scripts');
 
-// Enqueue des fichiers JS et CSS 
+// Enqueue des fichiers JS
 function enqueue_contact_modale_assets() {
     wp_enqueue_script('modale-script', get_stylesheet_directory_uri() . '/js/scripts.js', array('jquery'), null, true);
     wp_enqueue_script('filters-js', get_stylesheet_directory_uri() . '/js/filters.js', ['jquery'], null, true);
@@ -151,3 +162,40 @@ function load_and_filter_photos() {
 // Enregistrer l'action AJAX pour les utilisateurs connectés et non connectés
 add_action('wp_ajax_load_and_filter_photos', 'load_and_filter_photos');
 add_action('wp_ajax_nopriv_load_and_filter_photos', 'load_and_filter_photos');
+
+function force_single_photo_template($template) {
+    if (is_singular('photo')) { // Vérifie si c'est une page du type personnalisé 'photo'
+        $custom_template = locate_template('single-photo.php');
+        if ($custom_template) {
+            return $custom_template; // Charge le fichier 'single-photo.php' si trouvé
+        }
+    }
+    return $template; // Retourne le fichier par défaut sinon
+}
+add_filter('template_include', 'force_single_photo_template');
+
+
+function register_custom_post_type_photo() {
+    register_post_type('photo', array(
+        'labels' => array(
+            'name' => 'Photo',
+            'singular_name' => 'Photo',
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'rewrite' => array('slug' => 'photo'),
+        'supports' => array('title', 'editor', 'thumbnail'),
+    ));
+}
+add_action('init', 'register_custom_post_type_photo');
+
+function force_attachment_template($template) {
+    if (is_attachment()) { // Vérifie si c'est une pièce jointe
+        $custom_template = locate_template('single-photo.php');
+        if ($custom_template) {
+            return $custom_template; // Charge le fichier 'single-photos.php'
+        }
+    }
+    return $template; // Retourne le fichier par défaut sinon
+}
+add_filter('template_include', 'force_attachment_template');

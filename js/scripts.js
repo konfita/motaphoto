@@ -41,3 +41,29 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Un ou plusieurs éléments de la modale n'existent pas dans le DOM.");
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Ouvrir la popup au clic sur le bouton Contact
+    const contactButton = document.querySelector('.photo__contact .btn');
+    const popup = document.getElementById('contact-popup');
+    const closePopup = document.querySelector('.close-popup');
+
+    if (contactButton && popup && closePopup) {
+        contactButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            popup.style.display = 'flex';
+        });
+
+        // Fermer la popup au clic sur la croix
+        closePopup.addEventListener('click', function () {
+            popup.style.display = 'none';
+        });
+
+        // Fermer la popup au clic en dehors du contenu
+        window.addEventListener('click', function (e) {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+            }
+        });
+    }
+});

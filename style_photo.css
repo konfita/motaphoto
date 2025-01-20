@@ -1,0 +1,388 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+:root {
+    --primary-color: #0073aa;
+    --primary-hover-color: #005177;
+    --background-light: #f9f9f9;
+    --border-radius: 8px;
+    --spacing: 20px;
+}
+
+/*
+Theme Name: Motaphoto Child
+Template: twentytwentythree
+*/
+
+/* Styles pour la page de détail de la photo */
+.flexrow {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexcolumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.details-photo {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing);
+}
+
+.details-photo h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: var(--spacing);
+}
+
+.photo-image {
+    text-align: center;
+    margin-bottom: var(--spacing);
+}
+
+.photo-image img, .photo__others--images img, .photo-item img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    object-fit: cover;
+}
+
+.photo-meta {
+    background-color: var(--background-light);
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing);
+}
+
+.photo-meta p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.photo__contact {
+    text-align: center;
+    margin-bottom: var(--spacing);
+}
+
+.btn, .btn-all-photos {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.btn:hover, .btn-all-photos:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.site__navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing);
+}
+
+.site__navigation__prev, .site__navigation__next {
+    display: flex;
+    align-items: center;
+}
+
+.site__navigation__prev img, .site__navigation__next img {
+    width: 77px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+.photo__others {
+    text-align: center;
+    margin-bottom: var(--spacing);
+}
+
+.photo__others--images {
+    display: flex;
+    gap: var(--spacing);
+    justify-content: center;
+}
+
+.photo-item {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    background-color: #f3f3f3;
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: scale(1.05);
+}
+
+.openLightbox {
+    position: absolute;
+    cursor: pointer;
+    background: url("./assets/img/fullscreen.png") center center / 100% 100%;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    top: 20px;
+    right: 20px;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+}
+
+.news-info:hover .detail-photo,
+.news-info:hover .openLightbox,
+.news-info:hover .info-title,
+.news-info:hover .info-tax {
+    opacity: 1;
+}
+
+.container__photo,
+.photo__others {
+    text-transform: uppercase;
+}
+
+.photo__info  {
+    align-content: flex-end;
+}
+
+.photo__info--description,
+.photo__info--image {
+    max-height: 890px;
+    width: 50%;
+}
+
+.photo__info--image {
+    position: relative;
+    display: flex;
+    object-fit: contain;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    margin-left: 10px;
+}
+
+.photo__info--description {
+    justify-content: flex-end;
+    border-bottom: 1px solid #000;
+}
+
+.photo__info--description ul {
+    padding-bottom: 30px;
+}
+
+.photo__info--image img {
+    width: 100%;    
+    height: 100%;
+    transition: all 0.5s ease-in-out;
+}
+
+.photo__info--image:hover span {
+    opacity: 1;
+}
+
+/* Partie centrale - Contact + photos suivantes et précédentes */
+.photo__others {
+    padding: 75px 0;
+}
+
+.site__navigation__prev,
+.site__navigation__next {
+    text-align: center;
+    padding: 0 10px;
+}
+
+.site__navigation__prev .wp-post-image,
+.site__navigation__next .wp-post-image {
+    width: 77px;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.site__navigation__prev:hover .wp-post-image,
+.site__navigation__next:hover .wp-post-image {
+    opacity: 1;
+}
+
+.photo__contact {
+    padding: 20px 0 10px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000;
+}
+
+/* Partie basse - Autre photos de la catégorie */
+.photo__others--images {
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.photo__others--images .container-common {
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+    padding: 40px 10px 70px;
+}
+
+.container-common .news-info {  
+    width: 100%;   
+    height: 500px;  
+}
+
+.photo__others--images img { 
+    /* object-fit: contain; */
+    Object-fit: cover;
+    width: 100%;
+}
+
+.photo__others .btn {
+    margin: auto;
+    width: 241px;
+    padding: 6px;
+    transition: all 1s ease-in-out;
+}
+
+/*  **********************************  */
+/*    Media query : max-width: 959px    */
+/*  **********************************  */
+
+@media screen and (max-width: 959px) {
+    .photo_detail {
+        padding: 0;
+    }
+    
+    .photo__info {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 0 20px;
+        margin: -5px;
+        width: 100%;
+        border-bottom: 1px solid #000;
+    }
+   
+    .photo__info--description,
+    .photo__info--image {
+        margin: 0 auto;  
+    }
+
+    .photo__info--description {
+        padding-bottom: 10px;
+        width: 90%;
+        border-bottom: 0px solid #000;
+    }
+
+    .container__photo {
+        /* padding: 0 40px; */
+    }
+
+    .photo__info--image {
+        /* width: auto; */
+        min-width: 265px;
+    }
+    
+    .photo__info--image .container--image {
+        width: 100%;
+        /* width: auto; */
+        height: 100%;
+        max-height: 600px;
+    }
+
+    .photo_detail h1 {
+        font-size: 46px;
+        line-height: 48px;
+        padding: 30px 0;
+        width: 100%;
+    }
+
+    .photo_detail ul {
+        width: 100%;
+    }
+
+    .photo__contact{
+        justify-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .photo__contact p {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .photo_detail .btn {
+        margin: auto;
+        margin-bottom: 20px;
+    }
+
+    .site__navigation {
+        opacity: 0;
+        display: none;
+    }
+
+    .photo__others {
+        padding: 30px 40px;
+    }
+
+    .photo__others--images {
+        gap: 0;
+        padding: 0;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin: auto;
+    }
+
+    .photo__others--images .container-common {
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px 0 30px;
+    }
+
+    .container-common .news-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        width: 80%;
+        max-width: 600px;
+        height: 500px;
+    }
+}
+
+/*  **********************************  */
+/*    Media query : max-width: 580px     */
+/*  **********************************  */
+
+@media screen and (max-width: 580px) {
+    .container-common .news-info {
+        width: 90%;
+        max-width: 265px;
+        height: 230px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .details-photo__main {
+        flex-direction: column;
+        gap: var(--spacing);
+    }
+
+    .photo__others--images {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .photo__others--images img {
+        width: 100%;
+        margin-bottom: var(--spacing);
+    }
+}
