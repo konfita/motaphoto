@@ -13,6 +13,9 @@
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo.png" alt="Logo du site">
                 </a>
             </div>
+            <button id="menu-toggle" class="menu-toggle" aria-label="Menu">
+                <span class="hamburger"></span>
+            </button>
             <nav id="site-navigation" class="main-navigation">
                 <?php
                 wp_nav_menu(array(
@@ -23,11 +26,10 @@
                 ));
                 ?>
                 <ul>
-                    <li><a href="#" id="contactLink">CONTACT</a></li>
+                    <li><a href="#" id="contactLink" class="open-contact-modal">CONTACT</a></li>
                 </ul>
             </nav>
             <!-- Modale de contact  -->
-             <?php get_template_part('modale'); ?>
-             
+            <?php get_template_part('modale'); ?>
         </header>
         <main id="main" class="site-main">

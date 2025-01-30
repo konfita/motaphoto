@@ -11,6 +11,7 @@ function motaphoto_child_enqueue_styles() {
 }
 add_action('wp_enqueue_scripts', 'motaphoto_child_enqueue_styles');
 
+// Fonction principale pour charger les styles
 function motaphoto_enqueue_styles() {
     // Charger le style principal
     wp_enqueue_style(
@@ -19,6 +20,7 @@ function motaphoto_enqueue_styles() {
         array(),
         '1.0.0'
     );
+
     // Charger le style spécifique au header
     wp_enqueue_style(
         'modale', // Identifiant unique
@@ -26,19 +28,26 @@ function motaphoto_enqueue_styles() {
         array('main-style'), // Dépend du style principal
         '1.0.0'
     );
-    // Vérifie si le fichier simple-photo.php est utilisé
-    if (is_page_template('simple-photo.php')) {
-        // Enregistre et charge le fichier CSS
+
+    // Charger le style principal 
+    wp_enqueue_style(
+        'main-style', // Identifiant unique
+        get_stylesheet_directory_uri() . '/style.css', // style.css du thème
+        array(),
+        '1.0.0'
+    );
+
+    // Charger le style spécifique à la page photo
+    if (is_page_template('single-photo-template.php')) {
         wp_enqueue_style(
-            'motaphoto-child-style-photo', // Identifiant unique
-            get_stylesheet_directory_uri() . '/style_photo.css', // Chemin vers le fichier CSS
-            array(), // Dépendances (ici, aucune)
-            filemtime(get_stylesheet_directory() . '/style_photo.css') // Version basée sur la date de modification
+            'style-photo', // Identifiant unique
+            get_stylesheet_directory_uri() . '/style-photo.css', // Chemin vers style-photo.css
+            array('main-style'), // Dépend du style principal
+            filemtime(get_stylesheet_directory() . '/style-photo.css') // Version basée sur la date de modification
         );
     }
 }
 add_action('wp_enqueue_scripts', 'motaphoto_enqueue_styles');
-
 
 // Enregistrement des menus (principal et footer)
 function motaphoto_register_menus() {
@@ -63,7 +72,6 @@ function enqueue_contact_modale_assets() {
     wp_localize_script('filters-js', 'ajax_params', array(
         'ajax_url' => admin_url('admin-ajax.php'),
     ));
-
 }
 add_action('wp_enqueue_scripts', 'enqueue_contact_modale_assets');
 
@@ -163,39 +171,86 @@ function load_and_filter_photos() {
 add_action('wp_ajax_load_and_filter_photos', 'load_and_filter_photos');
 add_action('wp_ajax_nopriv_load_and_filter_photos', 'load_and_filter_photos');
 
-function force_single_photo_template($template) {
-    if (is_singular('photo')) { // Vérifie si c'est une page du type personnalisé 'photo'
-        $custom_template = locate_template('single-photo.php');
-        if ($custom_template) {
-            return $custom_template; // Charge le fichier 'single-photo.php' si trouvé
+// Fonction pour forcer l'utilisation du template personnalisé pour les photos
+function motaphoto_single_photo_template($template) {
+    global $post;
+
+    // Vérifier si c'est une publication du type "photos"
+    if ($post->post_type == 'photos') {
+        // Chemin vers votre template personnalisé
+        $new_template = locate_template(array('single-photo-template.php'));
+        if (!empty($new_template)) {
+            return $new_template;
         }
     }
-    return $template; // Retourne le fichier par défaut sinon
+
+    return $template;
 }
-add_filter('template_include', 'force_single_photo_template');
+add_filter('single_template', 'motaphoto_single_photo_template');
 
+function get_next_photo_ajax() {
 
-function register_custom_post_type_photo() {
-    register_post_type('photo', array(
-        'labels' => array(
-            'name' => 'Photo',
-            'singular_name' => 'Photo',
+    // Vérifier le nonce pour la sécurité
+    check_ajax_referer('photo_navigation_nonce', 'security');
+
+    // Récupérer l'ID du post actuel depuis la requête AJAX
+    $current_post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+
+    if ($current_post_id == 0) {
+        wp_send_json_error('ID du post actuel non valide.');
+        return;
+    }
+
+    // Créer une requête personnalisée pour récupérer le post suivant
+    $args = array(
+        'post_type'      => 'photos', 
+        'posts_per_page' => 1,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',// Trier par sa date
+        'order'          => 'ASC',// Ascendant
+        'date_query'     => array(
+            'after' => get_the_date('Y-m-d H:i:s', $current_post_id), // Récupérer les posts après le post actuel grâce à mla date
         ),
-        'public' => true,
-        'has_archive' => true,
-        'rewrite' => array('slug' => 'photo'),
-        'supports' => array('title', 'editor', 'thumbnail'),
-    ));
-}
-add_action('init', 'register_custom_post_type_photo');
+    );
 
-function force_attachment_template($template) {
-    if (is_attachment()) { // Vérifie si c'est une pièce jointe
-        $custom_template = locate_template('single-photo.php');
-        if ($custom_template) {
-            return $custom_template; // Charge le fichier 'single-photos.php'
+    $next_query = new WP_Query($args);
+
+    $next_image_url = '';
+    $next_post_url = '';
+
+    if ($next_query->have_posts()) {
+        while ($next_query->have_posts()) {
+            $next_query->the_post();
+            $next_post_id = get_the_ID();
+            // Récupérer l'URL du post
+            $next_post_url = get_permalink($next_post_id);
+
+            // Récupérer l'image attachée
+            $attachments = get_attached_media('image', $next_post_id);
+            if (!empty($attachments)) {
+                $attachment = array_shift($attachments);
+                $next_image_url = wp_get_attachment_image_src($attachment->ID, 'photo-detail-thumb')[0];
+            } else {
+                error_log('Aucune image attachée trouvée pour ce post.');
+            }
         }
+    } else {
+        error_log('Aucun post suivant trouvé.');
     }
-    return $template; // Retourne le fichier par défaut sinon
+
+    wp_reset_postdata(); // Réinitialiser les données de la requête principale
+
+    // Retourner l'URL de l'image
+    if (!empty($next_image_url)) {
+        wp_send_json_success(array('image_url' => $next_image_url, 'post_url' => $next_post_url));
+    } else {
+        wp_send_json_error('Aucune image trouvée pour la photo suivante.');
+    }
+
+    // Réinitialise les données de la requête principale
+    wp_reset_postdata();
+    wp_die();
 }
-add_filter('template_include', 'force_attachment_template');
+
+add_action('wp_ajax_get_next_photo', 'get_next_photo_ajax');
+add_action('wp_ajax_nopriv_get_next_photo', 'get_next_photo_ajax');

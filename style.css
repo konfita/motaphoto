@@ -59,6 +59,7 @@ body {
     margin-right: 20px;
 }
 
+
 /* Modale */
 
 /* Bouton de fermeture */
@@ -91,32 +92,34 @@ input[type="submit"]:hover {
     background-color: #999;
 }
 
+
 /* Photo d'accueil  */
+
 nav {
     display: flex;
     font-family: "Space Mono", monospace;
     line-height: 24px;
     text-transform: uppercase;
-  }
+}
   
-  nav .menu {
+nav .menu {
     display: flex;
-  }
+}
   
-  nav li:hover {
+nav li:hover {
     font-weight: 700;
     cursor: pointer;
-  }
+}
   
-  .hero {
+.hero {
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     margin-bottom: 60px;
-  }
+}
   
-  .hero h1 {
+.hero h1 {
     align-self: center;
     position: absolute;
     font-family: "Space Mono", monospace;
@@ -125,14 +128,16 @@ nav {
     text-transform: uppercase;
     text-shadow: 3px 0 #fff, -3px 0 #fff, 0 3px #fff, 0 -3px #fff, 3px 3px #fff, -3px -3px #fff, 3px -3px #fff, -3px 3px #fff;
     mix-blend-mode: lighten;
-  }
+}
   
-  .hero__background {
+.hero__background {
     height: 100%;
     width: 100%;
     object-fit: cover;
-  }
-  
+}
+
+
+
 /* Bloc photos  */
 .photo-list {
     display: grid;
@@ -167,130 +172,6 @@ nav {
     gap: 20px; /* Espacement entre les photos */
 }
 
-/* Styles pour la page de détail de la photo */
-.details-photo {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.details-photo h1 {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.photo-image {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.photo-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.photo-meta {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-.photo-meta p {
-    margin: 10px 0;
-    font-size: 1.1rem;
-}
-
-.photo__contact {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.photo__contact .btn {
-    background-color: #0073aa;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.photo__contact .btn:hover {
-    background-color: #005177;
-}
-
-.site__navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.site__navigation__prev, .site__navigation__next {
-    display: flex;
-    align-items: center;
-}
-
-.site__navigation__prev img, .site__navigation__next img {
-    width: 77px;
-    height: 60px;
-    margin-right: 10px;
-}
-
-.photo__others {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.photo__others--images {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.photo__others--images img {
-    width: 23%;
-    border-radius: 8px;
-}
-
-.btn-all-photos {
-    background-color: #0073aa;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-all-photos:hover {
-    background-color: #005177;
-}
-
-/* Chaque élément de la grille */
-.photo-item {
-    position: relative;
-    width: 100%; /* Prend la largeur disponible */
-    padding-top: 100%; /* Maintient un ratio 1:1 pour le carré */
-    overflow: hidden; /* Masque les parties de l'image qui dépassent */
-    border-radius: 8px; /* Coins arrondis pour l'ensemble du conteneur */
-    background-color: #f3f3f3; /* Couleur de fond par défaut */
-}
-
-.photo-item img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Recadre l'image pour remplir tout le carré sans déformation */
-    border-radius: 8px; /* Coins arrondis pour l'image */
-}
-
-
-.photo-item:hover {
-    transform: scale(1.05); /* Zoom léger au survol */
-}
 
 /* Bouton "Afficher plus" */
 .btn-load-more {
@@ -407,19 +288,63 @@ nav {
 
 /* Ajustement mobile  */
 /* Menu responsive */
+/* Style du bouton du menu burger */
+.menu-toggle {
+    display: none; /* Caché par défaut */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    position: relative;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    position: absolute;
+    left: 0;
+}
+
+.hamburger::before {
+    top: -8px;
+}
+
+.hamburger::after {
+    top: 8px;
+}
+
+/* Affichage du menu en mode mobile */
 @media (max-width: 768px) {
-    .site-header {
-        flex-direction: column; /* Logo au-dessus du menu */
-        align-items: center;
+    .menu-toggle {
+        display: block; /* Afficher le bouton en mode mobile */
     }
 
-    .main-navigation ul {
-        flex-direction: column; /* Affiche les éléments en colonne */
-        align-items: center;
+    #site-navigation {
+        display: none; /* Cacher le menu par défaut en mode mobile */
+        flex-direction: column;
+        width: 100%;
+        background-color: #f8f8f8;
+        position: absolute;
+        top: 100%;
+        left: 0;
     }
 
-    .main-navigation ul li {
-        margin: 10px 0; /* Espacement vertical */
+    #site-navigation.active {
+        display: flex; /* Afficher le menu quand il est actif */
+    }
+
+    #site-navigation ul {
+        flex-direction: column;
     }
 }
 
@@ -480,4 +405,326 @@ nav {
 
 #contact-form button:hover {
     background-color: #005177;
+}
+
+.photo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photo-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.site__navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.site__navigation__prev,
+.site__navigation__next {
+    margin: 0 20px;
+}
+
+.site__navigation__prev a,
+.site__navigation__next a {
+    text-decoration: none;
+    color: #000;
+    font-size: 24px;
+}
+
+.site__navigation__prev a:hover,
+.site__navigation__next a:hover {
+    color: #555;
+}
+
+
+/* Styles pour la page de détail de la photo */
+.details-photo {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.details-photo h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photo-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photo-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.photo-meta {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.photo-meta p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.photo__contact {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photo__contact .btn {
+    background-color: #0073aa;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.photo__contact .btn:hover {
+    background-color: #005177;
+}
+
+.site__navigation {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 20px;
+}
+
+.site__navigation__prev, .site__navigation__next {
+    display: flex;
+    align-items: center;
+}
+
+.site__navigation__prev img, .site__navigation__next img {
+    width: 77px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+.photo__others {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photo__others--images {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.photo__others--images img {
+    width: 23%;
+    border-radius: 8px;
+}
+
+.btn-all-photos {
+    background-color: #0073aa;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-all-photos:hover {
+    background-color: #005177;
+}
+
+/* Chaque élément de la grille */
+.photo-item {
+    position: relative;
+    width: 100%; /* Prend la largeur disponible */
+    padding-top: 100%; /* Maintient un ratio 1:1 pour le carré */
+    overflow: hidden; /* Masque les parties de l'image qui dépassent */
+    border-radius: 8px; /* Coins arrondis pour l'ensemble du conteneur */
+    background-color: #f3f3f3; /* Couleur de fond par défaut */
+}
+
+.photo-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recadre l'image pour remplir tout le carré sans déformation */
+    border-radius: 8px; /* Coins arrondis pour l'image */
+}
+
+
+.photo-item:hover {
+    transform: scale(1.05); /* Zoom léger au survol */
+}
+
+
+.hover-thumbnail {
+    position: absolute;
+    width: 150px;
+    height: auto;
+    display: none;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+#prev-thumbnail {
+    top: 150px;
+    left: 10%;
+}
+
+#next-thumbnail {
+    top: 150px;
+    right: 10%;
+}
+
+/* elements de la partie vous aimez aussi  */
+.container-common {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+}
+
+.photo-others h2 {
+    height: 27px;
+    top: 1158px;
+    left: 245px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 26.66px;
+    letter-spacing: 0.1em;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.bloc-photo {
+    display: grid;
+    justify-content: center;
+    left: 245px;
+    top: 118px;
+}
+
+.container-photo {
+    display: grid;
+    margin-top: 80px;
+}
+.thumbnail img {
+    width: 564px;
+    height: 495px;
+    object-fit: cover;
+    
+}
+
+.photo-others {
+    top: 1237px;
+    left: 728px;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    gap: 0px;
+    opacity: 0px;
+}
+
+.bloc-photo-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative; /* Définit le contexte de positionnement */
+    height: 844px; /* hauteur */
+}
+
+.container img {
+    width: 563px;
+    height: 844px;
+    object-fit: cover;
+}
+
+.photo-info {
+    position: absolute;
+    bottom: 0; /* Positionne le bloc en bas */
+    left: 0; /* Positionne le bloc à gauche */
+}
+
+.photo-info ul {
+    padding-bottom: 70px;
+    border-bottom: 2px solid black; /* Ajoute une ligne noire de 2px en bas de la liste */
+}
+
+.photo-contact {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 2px solid black; /* Ajoute une ligne noire de 2px en bas de la liste */
+}
+
+.photo-photo {
+    position: absolute;
+    right: 0; /* Positionne le bloc à droite */
+}
+
+
+
+.photo-navigation {
+    text-align: center;
+}
+
+.current-photo {
+    display: inline-block;
+}
+
+.main-photo {
+    max-width: 81px;
+    height: 71px;
+    display: block;
+    margin-top: 20px;
+    object-fit: cover;
+}
+
+.nav-arrows {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.nav-arrow {
+    font-size: 2rem;
+    color: black;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.nav-arrow:hover {
+    transform: scale(1.2);
+}
+
+
+.btn {
+    width: 272px;
+    height: 50px;
+    padding: 8px 15px 8px 15px;
+    border: #000 1px;
+    border-radius: 1px;
+}
+
+.photo-contact {
+    margin-top: 40px;
+}
+
+.bloc-medium {
+    margin-top: 40px;
 }

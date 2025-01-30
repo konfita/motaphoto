@@ -56,9 +56,9 @@
                             $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
                             $photo_id = get_the_ID(); // Récupérer l'ID de la photo
                     ?>
-                        <a href="<?php echo esc_url(get_permalink($photo_id)); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
-                            <?php the_post_thumbnail('medium'); ?>
-                        </a>
+                    <a href="<?php echo esc_url(get_permalink($photo_id)); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
+                        <?php the_post_thumbnail('medium'); ?>
+                    </a>
                     <?php } ?>
                     <h2><?php the_title(); ?></h2>
                 </div>
