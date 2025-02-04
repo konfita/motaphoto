@@ -141,12 +141,16 @@ function load_more_photos() {
         while ($query->have_posts()) {
             $query->the_post(); ?>
             <div class="photo-item">
-                <?php
-                if (has_post_thumbnail()) {
-                    the_post_thumbnail('medium');
-                }
-                ?>
-                <h2><?php the_title(); ?></h2>
+                    <?php
+                        if (has_post_thumbnail()) {
+                            $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
+                            $photo_id = get_the_ID(); // Récupérer l'ID de la photo
+                    ?>
+                    <a href="<?php echo esc_url(get_permalink($photo_id)); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
+                        <?php the_post_thumbnail('medium'); ?>
+                    </a>
+                    <?php } ?>
+                    <h2><?php the_title(); ?></h2>
             </div>
         <?php }
     } else {

@@ -27,7 +27,7 @@ Description: Template pour afficher les photographies
 
         <!-- Navigation entre photos -->
         <div class="photo-navigation">
-            <?php
+            <!-- <?php
                 // Récupérer l'article suivant
                 $next_post = get_next_post();
                 if ($next_post) {
@@ -35,25 +35,33 @@ Description: Template pour afficher les photographies
                     echo get_the_post_thumbnail($next_post->ID, 'large', ['class' => 'main-photo']);
                     echo '</div>';
                 }
-            ?>
+            ?> -->
 
             <div class="nav-arrows">
                 <?php
                     // Flèche précédente
                     $prev_post = get_previous_post();
                     if ($prev_post) {
-                        echo '<a rel="prev" href="' . get_permalink($prev_post) . '" class="nav-arrow prev-arrow">‹</a>';
+                        $prev_title = strip_tags(str_replace('"', '', $prev_post->post_title));
+                        $prev_post_id = $prev_post->ID;
+                        $prev_thumbnail = get_the_post_thumbnail($prev_post_id, 'thumbnail'); // Récupère la miniature
+                        echo '<a rel="prev" href="' . get_permalink($prev_post_id) . '" title="' . $prev_title . '" class="previous_post">';
+                        echo '<span class="nav-arrow" data-thumbnail="' . esc_attr($prev_thumbnail) . '">‹</span></a>';
                     }
-
-                    // Flèche suivante
+                    
                     $next_post = get_next_post();
                     if ($next_post) {
-                        echo '<a rel="next" href="' . get_permalink($next_post) . '" class="nav-arrow next-arrow">›</a>';
+                        $next_title = strip_tags(str_replace('"', '', $next_post->post_title));
+                        $next_post_id = $next_post->ID;
+                        $next_thumbnail = get_the_post_thumbnail($next_post_id, 'thumbnail'); // Récupère la miniature
+                        echo '<a rel="next" href="' . get_permalink($next_post_id) . '" title="' . $next_title . '" class="next_post">';
+                        echo '<span class="nav-arrow" data-thumbnail="' . esc_attr($next_thumbnail) . '">›</span></a>';
                     }
                 ?>
             </div>
         </div>
-
+        <div id="prev-thumbnail" class="hover-thumbnail"></div>
+        <div id="next-thumbnail" class="hover-thumbnail"></div>
     </div>
 
     <!-- Section "Vous aimerez aussi" -->

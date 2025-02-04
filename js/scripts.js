@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!thumbnailContent) return;
         thumbnailContainer.innerHTML = thumbnailContent;
         thumbnailContainer.style.display = 'block';
-        thumbnailContainer.style.top = `${e.clientY}px`;
-        thumbnailContainer.style.left = `${e.clientX + 20}px`;
+        thumbnailContainer.style.top = `1000px`;
+        thumbnailContainer.style.right = `160px`;
     }
 
     // Fonction pour cacher l'aperçu

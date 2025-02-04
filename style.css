@@ -564,9 +564,7 @@ nav li:hover {
 }
 
 
-.photo-item:hover {
-    transform: scale(1.05); /* Zoom léger au survol */
-}
+
 
 
 .hover-thumbnail {
@@ -578,18 +576,8 @@ nav li:hover {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-}
-
-#prev-thumbnail {
-    top: 150px;
-    left: 10%;
-}
-
-#next-thumbnail {
-    top: 150px;
-    right: 10%;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    /* overflow: hidden; */
 }
 
 /* elements de la partie vous aimez aussi  */
@@ -615,9 +603,8 @@ nav li:hover {
 
 .bloc-photo {
     display: grid;
-    justify-content: center;
-    left: 245px;
-    top: 118px;
+    padding-right: 10%;
+    padding-left: 10%;
 }
 
 .container-photo {
@@ -627,8 +614,12 @@ nav li:hover {
 .thumbnail img {
     width: 564px;
     height: 495px;
-    object-fit: cover;
-    
+    object-fit: cover; 
+}
+
+.bloc-medium {
+    margin-top: 40px;
+    margin-bottom: 80px;
 }
 
 .photo-others {
@@ -658,17 +649,21 @@ nav li:hover {
     position: absolute;
     bottom: 0; /* Positionne le bloc en bas */
     left: 0; /* Positionne le bloc à gauche */
+    width: 50%;
+    border-bottom: 2px solid black; /* Ajoute une ligne noire de 2px en bas de la liste */
 }
 
 .photo-info ul {
     padding-bottom: 70px;
-    border-bottom: 2px solid black; /* Ajoute une ligne noire de 2px en bas de la liste */
+    
 }
 
 .photo-contact {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 40px;
+    margin-bottom: 40px;
     border-bottom: 2px solid black; /* Ajoute une ligne noire de 2px en bas de la liste */
 }
 
@@ -676,8 +671,6 @@ nav li:hover {
     position: absolute;
     right: 0; /* Positionne le bloc à droite */
 }
-
-
 
 .photo-navigation {
     text-align: center;
@@ -698,7 +691,8 @@ nav li:hover {
 .nav-arrows {
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 200px;
+    margin-top: 50px;
 }
 
 .nav-arrow {
@@ -716,15 +710,146 @@ nav li:hover {
 .btn {
     width: 272px;
     height: 50px;
+    margin-left: 40px;
     padding: 8px 15px 8px 15px;
     border: #000 1px;
     border-radius: 1px;
 }
 
-.photo-contact {
-    margin-top: 40px;
-}
 
-.bloc-medium {
-    margin-top: 40px;
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .body {
+        width: 100%;
+        align-items: center;
+    }
+    /* Header */
+    .site-header {
+        padding: 10px 20px;
+    }
+
+    .logo-container img {
+        max-height: 15px;
+    }
+
+    .main-navigation ul li {
+        margin: 0 10px;
+    }
+
+    .main-navigation ul li a {
+        font-size: 14px;
+    }
+
+    /* Hero Section */
+    .hero {
+        width: 100%;
+        height: auto;
+        align-items: center;
+    }
+    .hero h1 {
+        font-size: 8vw;
+    }
+
+    .hero__background {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* Filters */
+    .filter {
+        width: 80%;
+        align-items: center;
+    }
+    .filters {
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 10px;
+    }
+
+    .filters-left, .filters-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .filters-left {
+        flex-direction: column;
+        
+        align-items: center;
+    }
+    .filter select {
+        width: 100%;
+    }
+
+    /* Photo Gallery */
+    .photo-gallery {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-item {
+        padding-top: 100%;
+    }
+
+    /* Footer */
+    .footer__nav .footer-menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer__nav .footer-menu li {
+        margin: 0;
+    }
+
+    /* Single Photo Template */
+    .bloc-photo {
+        padding: 0 10px;
+    }
+
+    .photo-info {
+        width: 100%;
+    }
+
+    .photo-photo {
+        position: static;
+        margin-top: 20px;
+    }
+
+    .photo-contact {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .photo-navigation {
+        margin-top: 20px;
+    }
+
+    .nav-arrows {
+        gap: 50px;
+    }
+
+    /* Modale */
+    .modale__content {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .modale__content__close {
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
+    .modale__content__header__line img {
+        width: 150px;
+        height: 24px;
+    }
+
+    .modale__content form {
+        width: 90%;
+    }
 }
