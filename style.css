@@ -784,7 +784,7 @@ nav li:hover {
     /* Photo Gallery */
     .photo-gallery {
         width: 100%;
-        padding: 0 10px;
+        padding: 0 20px;
     }
 
     .photo-grid {
@@ -793,8 +793,14 @@ nav li:hover {
 
     .photo-item {
         padding-top: 100%;
+        /* width: 80%;
+        height: 80%; */
     }
 
+    .photo-item img {
+        width: 80%;
+        height: 80%;
+    }
     /* Footer */
     .footer__nav .footer-menu {
         flex-direction: column;
@@ -807,7 +813,10 @@ nav li:hover {
 
     /* Single Photo Template */
     .bloc-photo {
-        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
     }
 
     .photo-info {
@@ -815,13 +824,68 @@ nav li:hover {
     }
 
     .photo-photo {
-        position: static;
-        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0px;
+    }
+
+    .container img {
+        width: 265px;
+        height: 397px;
+        object-fit: cover;
+    }
+
+    .container-common {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        gap: 40px;
+    }
+
+    .photo-others {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .thumbnail img {
+        width: 317px;
+        height: 278px;
+        object-fit: cover; 
     }
 
     .photo-contact {
         flex-direction: column;
         align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .bloc-medium {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        gap: 20px;
+    }
+
+    .btn {
+        margin-left: 0px;
+    }
+    .photo-navigation {
+        display: none;
+    }
+
+    .bloc-photo-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative; /* Définit le contexte de positionnement */
+        height: 754px;
     }
 
     .photo-navigation {
