@@ -1,7 +1,11 @@
 <?php 
-    // Récupération des champs Secure Custom Fields
-    $categorie  = get_field('categorie');
-    $format = get_field('format');
+    // Récupération des ctaxonomies
+    $categorie_terms = get_the_terms(get_the_ID(), 'categorie');
+    $format_terms = get_the_terms(get_the_ID(), 'format');
+
+    // Transformer en chaînes de caractères
+    $categorie = $categorie_terms ? implode(', ', wp_list_pluck($categorie_terms, 'name')) : 'Inconnue';
+    $format = $format_terms ? implode(', ', wp_list_pluck($format_terms, 'name')) : 'Inconnu';
     $reference = get_field('reference');
     $type = get_field('type');
     $annee = get_field('annee');

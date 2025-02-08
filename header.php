@@ -29,6 +29,9 @@
                     <li><a href="#" id="contactLink" class="open-contact-modal">CONTACT</a></li>
                 </ul>
             </nav>
+            <div class="mobile-menu-overlay">
+                <button class="menu-close">Fermer</button>
+            </div>
             <!-- Modale de contact  -->
             <?php get_template_part('modale'); ?>
         </header>

@@ -5,29 +5,34 @@
         $categorie = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : (isset($_GET['categorie']) ? sanitize_text_field($_GET['categorie']) : '');
         $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : (isset($_GET['format']) ? sanitize_text_field($_GET['format']) : '');
 
-        // Construire la requête
-        $meta_query = array('relation' => 'AND');
-        if ($categorie) {
-            $meta_query[] = array(
-                'key' => 'categorie',
-                'value' => $categorie,
-                'compare' => '='
-            );
-        }
-        if ($format) {
-            $meta_query[] = array(
-                'key' => 'format',
-                'value' => $format,
-                'compare' => '='
+        // Construire la requête WP_Query
+        $args = array(
+            'post_type'      => 'photos',
+            'posts_per_page' => 8,
+        );
+
+        // Construire la tax_query pour filtrer les taxonomies
+        $tax_query = array('relation' => 'AND');
+
+        if (!empty($categorie)) {
+            $tax_query[] = array(
+                'taxonomy' => 'categorie', // Assurez-vous que cette taxonomie existe
+                'field'    => 'slug',
+                'terms'    => $categorie,
             );
         }
 
-        // Requête WP_Query
-        $args = array(
-            'post_type' => 'photos',
-            'posts_per_page' => 8,
-            'meta_query' => $meta_query,
-        );
+        if (!empty($format)) {
+            $tax_query[] = array(
+                'taxonomy' => 'format', // Assurez-vous que cette taxonomie existe
+                'field'    => 'slug',
+                'terms'    => $format,
+            );
+        }
+
+        if (!empty($tax_query)) {
+            $args['tax_query'] = $tax_query;
+        }
 
         // Appliquer le tri si nécessaire
         $sort_by = isset($_POST['sort_by']) ? sanitize_text_field($_POST['sort_by']) : (isset($_GET['sort_by']) ? sanitize_text_field($_GET['sort_by']) : 'date_desc');
@@ -60,7 +65,6 @@
                         <?php the_post_thumbnail('medium'); ?>
                     </a>
                     <?php } ?>
-                    <h2><?php the_title(); ?></h2>
                 </div>
             <?php endwhile;
         else :

@@ -76,21 +76,20 @@ function enqueue_contact_modale_assets() {
 add_action('wp_enqueue_scripts', 'enqueue_contact_modale_assets');
 
 function enqueue_lightbox_scripts() {
-    // Enqueue Lightbox CSS
-    wp_enqueue_style('lightbox-css', get_stylesheet_directory_uri() . '/lightbox.css');
+    if (is_front_page()) { // Vérifier si on est sur la page d'accueil
+        wp_enqueue_script('jquery'); 
+        wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/js/lightbox.js', array('jquery'), null, true);
+        wp_enqueue_style('lightbox-css', get_stylesheet_directory_uri() . '/lightbox.css');
 
-    // Enqueue Lightbox JS
-    wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/js/lightbox.js', array('jquery'), null, true);
-
-    // Optionnel : Ajouter des options ou des configurations supplémentaires
-    wp_add_inline_script('lightbox-js', 'lightbox.option({
-        resizeDuration: 200,
-        wrapAround: true,
-        showImageNumberLabel: true,
-        disableScrolling: true
-    })');
+        // Passer les variables PHP à JS
+        wp_localize_script('lightbox-js', 'motaphoto_ajax', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('motaphoto_lightbox_nonce')
+        ));
+    }
 }
 add_action('wp_enqueue_scripts', 'enqueue_lightbox_scripts');
+
 
 // Enregistrement du type de contenu personnalisé "Photos"
 function register_photos_cpt() {
@@ -111,7 +110,6 @@ function register_photos_cpt() {
         'has_archive' => true,
         'rewrite' => array('slug' => 'photos'),
         'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
-        'taxonomies' => array('category', 'post_tag'),
     ));
 }
 add_action('init', 'register_photos_cpt');
@@ -150,7 +148,6 @@ function load_more_photos() {
                         <?php the_post_thumbnail('medium'); ?>
                     </a>
                     <?php } ?>
-                    <h2><?php the_title(); ?></h2>
             </div>
         <?php }
     } else {
