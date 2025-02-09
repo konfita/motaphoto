@@ -1,74 +1,57 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImage = document.querySelector('.lightbox__image');
-  const lightboxTitle = document.querySelector('.lightbox__title');
-  const closeBtn = document.querySelector('.lightbox__close');
-  const nextBtn = document.querySelector('.lightbox__next');
-  const prevBtn = document.querySelector('.lightbox__prev');
-  const loader = document.querySelector('.lightbox__loader');
+document.addEventListener("DOMContentLoaded", function () {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById("lightbox-image");
+  const lightboxTitle = document.getElementById("lightbox-title");
+  const closeButton = document.querySelector(".lightbox-close");
+  const prevButton = document.querySelector(".lightbox-prev");
+  const nextButton = document.querySelector(".lightbox-next");
+  let images = [];
+  let currentIndex = 0;
 
-  let currentPhotoId = null;
-  let photosList = [];
+  // Récupérer toutes les images de la galerie
+  const triggers = document.querySelectorAll(".lightbox-trigger");
+  triggers.forEach((trigger, index) => {
+      images.push({
+          src: trigger.getAttribute("data-src"),
+          title: trigger.getAttribute("data-title")
+      });
 
-  // Ouvrir la lightbox
-  document.querySelectorAll('.fullscreen-icon').forEach(icon => {
-      icon.addEventListener('click', function(e) {
-          const photoItem = this.closest('.photo-item');
-          currentPhotoId = photoItem.dataset.photoId;
-          photosList = JSON.parse(photoItem.dataset.photosList);
-          
-          loadPhotoData(currentPhotoId);
-          lightbox.classList.remove('hidden');
+      trigger.addEventListener("click", function (e) {
+          e.preventDefault();
+          openLightbox(index);
       });
   });
 
-  // Fermer la lightbox
-  closeBtn.addEventListener('click', () => toggleLightbox(false));
-  lightbox.querySelector('.lightbox__overlay').addEventListener('click', () => toggleLightbox(false));
-
-  // Navigation
-  nextBtn.addEventListener('click', () => navigatePhoto('next'));
-  prevBtn.addEventListener('click', () => navigatePhoto('prev'));
-
-  function toggleLightbox(show) {
-      lightbox.classList.toggle('hidden', !show);
-      document.body.style.overflow = show ? 'hidden' : '';
+  function openLightbox(index) {
+      currentIndex = index;
+      lightboxImage.src = images[currentIndex].src;
+      lightboxTitle.textContent = images[currentIndex].title;
+      lightbox.style.display = "flex";
   }
 
-  async function loadPhotoData(photoId) {
-      loader.classList.remove('hidden');
-      
-      try {
-          const response = await jQuery.ajax({
-              url: lightbox_vars.ajax_url,
-              type: 'POST',
-              data: {
-                  action: 'get_photo_data',
-                  nonce: lightbox_vars.nonce,
-                  photo_id: photoId
-              }
-          });
+  function closeLightbox() {
+      lightbox.style.display = "none";
+  }
 
-          if(response.success) {
-              lightboxImage.src = response.data.image_url;
-              lightboxTitle.textContent = response.data.title;
-              currentPhotoId = photoId;
-          }
-      } catch (error) {
-          console.error('Erreur:', error);
-      } finally {
-          loader.classList.add('hidden');
+  function showPrev() {
+      if (currentIndex > 0) {
+          openLightbox(currentIndex - 1);
       }
   }
 
-  function navigatePhoto(direction) {
-      const currentIndex = photosList.findIndex(id => id == currentPhotoId);
-      let newIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
-      
-      if(newIndex < 0) newIndex = photosList.length - 1;
-      if(newIndex >= photosList.length) newIndex = 0;
-      
-      currentPhotoId = photosList[newIndex];
-      loadPhotoData(currentPhotoId);
+  function showNext() {
+      if (currentIndex < images.length - 1) {
+          openLightbox(currentIndex + 1);
+      }
   }
+
+  closeButton.addEventListener("click", closeLightbox);
+  prevButton.addEventListener("click", showPrev);
+  nextButton.addEventListener("click", showNext);
+
+  lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox) {
+          closeLightbox();
+      }
+  });
 });

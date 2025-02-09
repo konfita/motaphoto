@@ -1,25 +1,49 @@
-<div class="lightbox-overlay" id="lightbox-overlay"></div>
+<div class="photo-gallery">
+    <div class="photo-grid">
+        <?php
+        $query = new WP_Query($args);
 
-<div class="lightbox hidden" id="lightbox-container">
-    <button class="lightbox__close btn-close" id="close-lightbox" type="button">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/close.png" alt="Fermer la lightbox" />
-    </button>
+        if ($query->have_posts()) :
+            while ($query->have_posts()) : $query->the_post();
+                if (has_post_thumbnail()) {
+                    $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                    $photo_id = get_the_ID();
+                    $photo_title = get_the_title();
+        ?>
+                <div class="photo-item">
+                    <div class="photo-wrapper">
+                        <a href="#" class="lightbox-trigger" data-src="<?php echo esc_url($thumbnail_url); ?>" data-title="<?php echo esc_attr($photo_title); ?>">
+                            <?php the_post_thumbnail('medium'); ?>
+                            <div class="hover-overlay">
+                                <span class="fullscreen-text">Plein écran</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+        <?php
+                }
+            endwhile;
+        else :
+            echo '<p>Aucune photo trouvée.</p>';
+        endif;
 
-    <div class="lightbox__content">
-        <div class="lightbox__image">
-            <img id="lightbox-img" src="" alt="Image en plein écran">
-        </div>
-        <div class="lightbox__info">
-            <h2 id="lightbox-title"></h2>
-            <div class="lightbox__nav">
-                <button class="lightbox__prev nav-button">← Précédent</button>
-                <button class="lightbox__next nav-button">Suivant →</button>
-            </div>
-        </div>
+        wp_reset_postdata();
+        ?>
     </div>
 
-    <!-- Zone où le contenu AJAX sera injecté -->
-    <div id="lightbox__container_content" class="hidden">
-        <div class="lightbox__loader">Chargement...</div>
+    <button id="load-more" class="btn-load-more" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">Afficher plus</button>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-overlay"></div>
+    <div class="lightbox-content">
+        <img id="lightbox-image" src="" alt="">
+        <div class="lightbox-info">
+            <span id="lightbox-title"></span>
+            <button class="lightbox-close">&times;</button>
+            <button class="lightbox-prev">&#10094;</button>
+            <button class="lightbox-next">&#10095;</button>
+        </div>
     </div>
 </div>
