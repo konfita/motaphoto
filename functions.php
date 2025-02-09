@@ -75,20 +75,7 @@ function enqueue_contact_modale_assets() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_contact_modale_assets');
 
-function enqueue_lightbox_scripts() {
-    if (is_front_page()) { // Vérifier si on est sur la page d'accueil
-        wp_enqueue_script('jquery'); 
-        wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/js/lightbox.js', array('jquery'), null, true);
-        wp_enqueue_style('lightbox-css', get_stylesheet_directory_uri() . '/lightbox.css');
 
-        // Passer les variables PHP à JS
-        wp_localize_script('lightbox-js', 'motaphoto_ajax', array(
-            'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce'   => wp_create_nonce('motaphoto_lightbox_nonce')
-        ));
-    }
-}
-add_action('wp_enqueue_scripts', 'enqueue_lightbox_scripts');
 
 
 // Enregistrement du type de contenu personnalisé "Photos"

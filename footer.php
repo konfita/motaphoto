@@ -13,7 +13,6 @@
       }
     ?>
   </nav>
-  <?php get_template_part('lightbox'); ?>
   <?php wp_footer(); ?>
 </footer>
 

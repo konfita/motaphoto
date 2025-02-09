@@ -31,6 +31,21 @@ body {
     align-items: center;
 }
 
+.main-navigation li {
+    display: inline-block; /* ou inline */
+    margin-right: 1rem;    /* un petit espace entre chaque élément */
+  }
+  
+
+  .main-navigation li a {
+    text-decoration: none;
+  }
+  /* Centrer le contenu du menu si tu le souhaites */
+  .main-navigation {
+    text-align: center;
+  }
+  
+
 .main-navigation ul {
     display: flex;
     list-style: none; /* Supprime les puces */
@@ -188,40 +203,6 @@ nav li:hover {
     background-color: #005177;
 }
 
-.lightbox-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
-    z-index: 999;
-}
-
-/* Cacher la lightbox par défaut */
-.lightbox {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1000;
-    max-width: 90%;
-    max-height: 90%;
-}
-
-/* Afficher la lightbox uniquement au survol */
-.lightbox.active,
-.lightbox-overlay.active {
-    display: block;
-}
-
-
-
 /* Les Filtres  */
 .filters {
     display: flex;
@@ -321,66 +302,6 @@ nav li:hover {
 }
 
 /* Ajustement mobile  */
-/* Menu responsive */
-/* Style du bouton du menu burger */
-.menu-toggle {
-    display: none; /* Caché par défaut */
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.hamburger {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #000;
-    position: relative;
-}
-
-.hamburger::before,
-.hamburger::after {
-    content: '';
-    width: 25px;
-    height: 3px;
-    background-color: #000;
-    position: absolute;
-    left: 0;
-}
-
-.hamburger::before {
-    top: -8px;
-}
-
-.hamburger::after {
-    top: 8px;
-}
-
-/* Affichage du menu en mode mobile */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* Afficher le bouton en mode mobile */
-    }
-
-    #site-navigation {
-        display: none; /* Cacher le menu par défaut en mode mobile */
-        flex-direction: column;
-        width: 100%;
-        background-color: #f8f8f8;
-        position: absolute;
-        top: 100%;
-        left: 0;
-    }
-
-    #site-navigation.active {
-        display: flex; /* Afficher le menu quand il est actif */
-    }
-
-    #site-navigation ul {
-        flex-direction: column;
-    }
-}
 
 /* Styles pour la popup de contact */
 .popup {
@@ -584,7 +505,6 @@ nav li:hover {
     padding-top: 100%; /* Maintient un ratio 1:1 pour le carré */
     overflow: hidden; /* Masque les parties de l'image qui dépassent */
     border-radius: 8px; /* Coins arrondis pour l'ensemble du conteneur */
-    background-color: #f3f3f3; /* Couleur de fond par défaut */
 }
 
 .photo-item img {
@@ -596,10 +516,6 @@ nav li:hover {
     object-fit: cover; /* Recadre l'image pour remplir tout le carré sans déformation */
     border-radius: 8px; /* Coins arrondis pour l'image */
 }
-
-
-
-
 
 .hover-thumbnail {
     position: absolute;
@@ -725,8 +641,8 @@ nav li:hover {
 .nav-arrows {
     display: flex;
     justify-content: center;
-    gap: 80px;
-    margin-top: 120px;
+    gap: 90px;
+    margin-top: 115px;
 }
 
 .nav-arrow {
@@ -750,9 +666,7 @@ nav li:hover {
     border-radius: 1px;
 }
 
-.mobile-menu-overlay {
-    display: none;
-}
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -775,40 +689,6 @@ nav li:hover {
 
     .main-navigation ul li a {
         font-size: 14px;
-    }
-
-    /* Styles pour l'overlay du menu mobile */
-    /* Cacher le menu desktop en mode mobile */
-    .main-navigation {
-        display: none;
-    }
-    
-    /* Afficher le menu quand il est actif */
-    .main-navigation.active {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        background-color: #f8f8f8;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 1000;
-    }
-    
-    /* Affichage du menu mobile */
-    .mobile-menu-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        z-index: 1000;
-    }
-    
-    .mobile-menu-overlay.active {
-        display: block;
     }
 
     /* Hero Section */
@@ -835,6 +715,7 @@ nav li:hover {
         flex-direction: column;
         align-items: center;
         margin: 20px 10px;
+        gap: 20px;
     }
 
     .filters-left, .filters-right {
@@ -853,29 +734,30 @@ nav li:hover {
 
     /* Photo Gallery */
     .photo-gallery {
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        padding: 0 20px;
+        padding: 0px;
+        justify-content: center;
+        justify-items: center;
     }
 
     .photo-grid {
         display: flex;
-        flex-wrap: wrap;
-        gap: 20px; /* Espacement entre les photos */
-    }
-    
-    .photo-grid > * {
-        flex: 1 1 100%; /* Une seule colonne (100% de la largeur) */
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 40px;
     }
 
     .photo-item {
         padding-top: 100%;
-        /* width: 80%;
-        height: 80%; */
+        width: 344px !important;
+        height: 0px !important;
     }
 
     .photo-item img {
-        width: 80%;
-        height: 80%;
+        width: 344px;
+        height: 344px;
     }
     /* Footer */
     .footer__nav .footer-menu {
@@ -896,14 +778,11 @@ nav li:hover {
     }
 
     .photo-info {
-        width: 344px;
-        height: 276px;
+        width: 100%;
     }
 
     .photo-info h1 {
-        font-weight: 400;
-        size: 46px;
-        justify-items: center;
+        text-align: center;
     }
     .photo-photo {
         display: flex;
@@ -911,10 +790,15 @@ nav li:hover {
         justify-content: center;
         align-items: center;
         margin-top: 0px;
-        width: 344px;
-        height: 397px;
+        margin-left: 40px;
+        right: auto;
     }
 
+    .container-photo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
     .container img {
         width: 265px;
         height: 397px;
@@ -933,6 +817,7 @@ nav li:hover {
         display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
     }
 
     .thumbnail img {
@@ -969,7 +854,8 @@ nav li:hover {
         flex-direction: column;
         justify-content: space-between;
         position: relative; /* Définit le contexte de positionnement */
-        height: 670px;
+        right: auto;
+        height: 754px;
     }
 
     .photo-navigation {
@@ -980,27 +866,118 @@ nav li:hover {
         gap: 50px;
     }
 
-    /* Modale */
-    .modale {
-        width: 300px;
-    }
-    .modale__content {
-        width: 70% !important;
-        height: auto;
-        padding: 20px;
-    }
-
-    .modale__content__close {
-        margin-left: auto !important;
-        margin-right: 20px;
-    }
-
-    .modale__content__header__line img {
-        width: 150px;
-        height: 24px;
-    }
-
-    .modale__content form {
-        width: 90% !important;
-    }
+    
 }
+
+
+/* ------------------------------------
+   Bouton burger
+------------------------------------ */
+/* Menu responsive */
+/* Style du bouton du menu burger */
+.menu-toggle {
+    display: none; /* Caché par défaut */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    position: relative;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    position: absolute;
+    left: 0;
+    top: 1px;
+}
+
+.hamburger::before {
+    top: -8px;
+}
+
+   .menu-toggle {
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    background: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* Les trois barres du hamburger : 
+     on les crée via la classe .hamburger */
+  .menu-toggle .hamburger,
+  .menu-toggle .hamburger::before,
+  .menu-toggle .hamburger::after {
+    display: block;
+    /* width: 100%;
+    height: 4px; */
+    background-color: #000; /* couleur des barres */
+    position: absolute;
+    transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
+  }
+  
+  /* Barre du haut : on la positionne ~10px au-dessus de la barre du milieu */
+  .menu-toggle .hamburger::before {
+    top: -8px;
+  }
+  
+  /* Barre du bas : on la positionne ~10px en-dessous de la barre du milieu */
+  .menu-toggle .hamburger::after {
+    bottom: -8px;
+  }
+  
+  /* ------------------------------------
+     Quand on ouvre le menu (.open)
+  ------------------------------------ */
+  
+  /* La barre du milieu disparaît visuellement */
+  .menu-toggle.open .hamburger {
+    background-color: transparent;
+  }
+  
+  /* Barre du haut devient un slash \ */
+  .menu-toggle.open .hamburger::before {
+    top: 0; /* on la ramène au niveau de la barre du milieu */
+    transform: rotate(45deg);
+  }
+  
+  /* Barre du bas devient un slash / */
+  .menu-toggle.open .hamburger::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+  }
+  
+  /* ------------------------------------
+     Navigation (responsive)
+  ------------------------------------ */
+  .main-navigation {
+    display: none;
+  }
+  
+  .main-navigation.open {
+    display: block;
+    background: #fff;
+  }
+  
+  @media (min-width: 768px) {
+    .menu-toggle {
+      display: none;
+    }
+    .main-navigation {
+      display: block;
+    }
+  }
+  

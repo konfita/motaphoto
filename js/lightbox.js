@@ -1,44 +1,74 @@
-document.addEventListener("DOMContentLoaded", function () {
-  (function ($) {
-      $(document).ready(function () {
-          // Vérifier si on est sur la page d'accueil (front-page.php)
-          if (!$("body").hasClass("home")) {
-              return; // Arrêter le script si ce n'est pas la page d'accueil
-          }
+document.addEventListener('DOMContentLoaded', function() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.querySelector('.lightbox__image');
+  const lightboxTitle = document.querySelector('.lightbox__title');
+  const closeBtn = document.querySelector('.lightbox__close');
+  const nextBtn = document.querySelector('.lightbox__next');
+  const prevBtn = document.querySelector('.lightbox__prev');
+  const loader = document.querySelector('.lightbox__loader');
 
-          let idPhoto = null;
-          let idValue = 0;
-          let totalPhotos = $(".photo-item img");
-          let nbTotalPhotos = totalPhotos.length;
+  let currentPhotoId = null;
+  let photosList = [];
 
-          // Fonction pour afficher la lightbox
-          function showLightbox(index) {
-              idValue = index;
-              idPhoto = $(totalPhotos[index]).data("postid");
-              updateLightbox();
-              $(".lightbox").addClass("active");
-              $(".lightbox-overlay").addClass("active");
-          }
-
-          // Fonction pour fermer la lightbox
-          function closeLightbox() {
-              $(".lightbox").removeClass("active");
-              $(".lightbox-overlay").removeClass("active");
-          }
-
-          // Afficher la lightbox au survol
-          $(".photo-item img").mouseenter(function () {
-              let index = totalPhotos.index(this);
-              showLightbox(index);
-          });
-
-          // Fermeture au passage de la souris hors de l'image
-          $(".lightbox").mouseleave(closeLightbox);
-
-          // Fermeture avec la touche Échap
-          $("body").keyup(function (e) {
-              if (e.key === "Escape") closeLightbox();
-          });
+  // Ouvrir la lightbox
+  document.querySelectorAll('.fullscreen-icon').forEach(icon => {
+      icon.addEventListener('click', function(e) {
+          const photoItem = this.closest('.photo-item');
+          currentPhotoId = photoItem.dataset.photoId;
+          photosList = JSON.parse(photoItem.dataset.photosList);
+          
+          loadPhotoData(currentPhotoId);
+          lightbox.classList.remove('hidden');
       });
-  })(jQuery);
+  });
+
+  // Fermer la lightbox
+  closeBtn.addEventListener('click', () => toggleLightbox(false));
+  lightbox.querySelector('.lightbox__overlay').addEventListener('click', () => toggleLightbox(false));
+
+  // Navigation
+  nextBtn.addEventListener('click', () => navigatePhoto('next'));
+  prevBtn.addEventListener('click', () => navigatePhoto('prev'));
+
+  function toggleLightbox(show) {
+      lightbox.classList.toggle('hidden', !show);
+      document.body.style.overflow = show ? 'hidden' : '';
+  }
+
+  async function loadPhotoData(photoId) {
+      loader.classList.remove('hidden');
+      
+      try {
+          const response = await jQuery.ajax({
+              url: lightbox_vars.ajax_url,
+              type: 'POST',
+              data: {
+                  action: 'get_photo_data',
+                  nonce: lightbox_vars.nonce,
+                  photo_id: photoId
+              }
+          });
+
+          if(response.success) {
+              lightboxImage.src = response.data.image_url;
+              lightboxTitle.textContent = response.data.title;
+              currentPhotoId = photoId;
+          }
+      } catch (error) {
+          console.error('Erreur:', error);
+      } finally {
+          loader.classList.add('hidden');
+      }
+  }
+
+  function navigatePhoto(direction) {
+      const currentIndex = photosList.findIndex(id => id == currentPhotoId);
+      let newIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
+      
+      if(newIndex < 0) newIndex = photosList.length - 1;
+      if(newIndex >= photosList.length) newIndex = 0;
+      
+      currentPhotoId = photosList[newIndex];
+      loadPhotoData(currentPhotoId);
+  }
 });

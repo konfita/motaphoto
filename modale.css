@@ -103,3 +103,27 @@
       transform: translateX(-100%);
   }
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  /* Modale */
+  .modale__content {
+    width: 400px !important;
+    height: auto;
+    padding: 20px;
+  }
+
+  .modale__content__close {
+    margin-left: 350px !important;
+    margin-right: 10px;
+  }
+
+  .modale__content__header__line img {
+    width: 150px;
+    height: 24px;
+  }
+
+  .modale__content form {
+    width: 90%;
+  }
+}
