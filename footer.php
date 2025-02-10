@@ -13,19 +13,7 @@
       }
     ?>
   </nav>
-  <div class="lightbox-overlay">
-    <div class="lightbox-content">
-        <span class="close-lightbox">&times;</span>
-        <img src="" class="lightbox-image">
-        <div class="lightbox-info">
-            <span class="photo-title"></span>
-            <div class="lightbox-navigation">
-                <button class="prev-photo">Précédente</button>
-                <button class="next-photo">Suivante</button>
-            </div>
-        </div>
-    </div>
-  </div>
+  <?php get_template_part( 'template-parts/lightbox' ); ?>
   <?php wp_footer(); ?>
 </footer>
 

@@ -242,5 +242,199 @@ function get_next_photo_ajax() {
     wp_die();
 }
 
+
+
+
 add_action('wp_ajax_get_next_photo', 'get_next_photo_ajax');
 add_action('wp_ajax_nopriv_get_next_photo', 'get_next_photo_ajax');
+
+
+
+
+
+
+
+
+/* Fonction AJAX pour récupérer la photo précédente dans la lightbox */
+function get_previous_lightbox_photo_ajax() {
+    check_ajax_referer('lightbox_nonce', 'security');
+
+    $current_post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    if ($current_post_id === 0) {
+        wp_send_json_error(['error' => 'ID du post actuel invalide.']);
+        wp_die();
+    }
+
+    // Récupérer la date du post actuel
+    $post_date = get_post_field('post_date', $current_post_id);
+    if (!$post_date) {
+        wp_send_json_error(['error' => 'Date du post non trouvée.']);
+        wp_die();
+    }
+
+    $args = array(
+        'post_type'      => 'photos',
+        'posts_per_page' => 1,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'post__not_in'   => array($current_post_id), // Exclure le post actuel
+        'date_query'     => array(
+            array(
+                'before'     => $post_date,
+                'inclusive'  => false
+            )
+        ),
+    );
+
+    $previous_query = new WP_Query($args);
+
+    if ($previous_query->have_posts()) {
+        $previous_query->the_post();
+        $previous_post_id = get_the_ID();
+        $image_url = get_the_post_thumbnail_url($previous_post_id, 'full');
+
+        wp_send_json_success([
+            'id' => $previous_post_id,
+            'url' => $image_url ?: '',
+            'reference' => get_field('reference', $previous_post_id),
+            'category' => wp_get_post_terms($previous_post_id, 'categorie')[0]->name ?? 'Non classé'
+        ]);
+    } else {
+        wp_send_json_error(['error' => 'Aucune photo précédente trouvée.']);
+    }
+
+    wp_reset_postdata();
+    wp_die();
+}
+
+function get_next_lightbox_photo_ajax() {
+    check_ajax_referer('lightbox_nonce', 'security');
+
+    $current_post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    if ($current_post_id === 0) {
+        wp_send_json_error(['error' => 'ID du post actuel invalide.']);
+        wp_die();
+    }
+
+    // Récupérer la date du post actuel
+    $post_date = get_post_field('post_date', $current_post_id);
+    if (!$post_date) {
+        wp_send_json_error(['error' => 'Date du post non trouvée.']);
+        wp_die();
+    }
+
+    $args = array(
+        'post_type'      => 'photos',
+        'posts_per_page' => 1,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'ASC',
+        'post__not_in'   => array($current_post_id),
+        'date_query'     => array(
+            array(
+                'after'     => $post_date,
+                'inclusive' => false
+            )
+        ),
+    );
+
+    $next_query = new WP_Query($args);
+
+    if ($next_query->have_posts()) {
+        $next_query->the_post();
+        $next_post_id = get_the_ID();
+        $image_url = get_the_post_thumbnail_url($next_post_id, 'full');
+
+        wp_send_json_success([
+            'id' => $next_post_id,
+            'url' => $image_url ?: '',
+            'reference' => get_field('reference', $next_post_id),
+            'category' => wp_get_post_terms($next_post_id, 'categorie')[0]->name ?? 'Non classé'
+        ]);
+    } else {
+        wp_send_json_error(['error' => 'Aucune photo suivante trouvée.']);
+    }
+
+    wp_reset_postdata();
+    wp_die();
+}
+
+
+add_action('wp_ajax_get_next_lightbox_photo_ajax', 'get_next_lightbox_photo_ajax');
+add_action('wp_ajax_nopriv_get_next_lightbox_photo_ajax', 'get_next_lightbox_photo_ajax');
+
+add_action('wp_ajax_get_previous_lightbox_photo_ajax', 'get_previous_lightbox_photo_ajax');
+add_action('wp_ajax_nopriv_get_previous_lightbox_photo_ajax', 'get_previous_lightbox_photo_ajax');
+
+
+/* Fonction pour récupérer l'URL de l'image pour la lightbox */
+function get_lightbox_image_url($attachment_id) {
+    if (!$attachment_id) {
+        return false;
+    }
+
+    // Récupérer les informations de l'image pour vérifier l'orientation
+    $image_data = wp_get_attachment_metadata($attachment_id);
+    if (!$image_data) {
+        return false;
+    }
+
+    // Calculer l'orientation
+    $orientation = ($image_data['width'] > $image_data['height']) ? 'landscape' : 'portrait';
+
+    // Retourner l'URL de l'image en fonction de l'orientation
+    if ($orientation === 'landscape') {
+        return wp_get_attachment_image_url($attachment_id, 'photo-lightbox-landscape');
+    } else {
+        return wp_get_attachment_image_url($attachment_id, 'photo-lightbox-portrait');
+    }
+}
+
+function enqueue_photo_gallery_scripts() {
+    // Charger le script de la galerie
+    wp_enqueue_script('photo-gallery', get_stylesheet_directory_uri() . '/js/photo-gallery.js', array(), null, true);
+
+    // Passer les variables AJAX à JavaScript
+    wp_localize_script('photo-gallery', 'lightbox_ajax_object', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'security' => wp_create_nonce('lightbox_nonce')
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_photo_gallery_scripts');
+
+
+function get_photo_data_ajax() {
+    // Vérifier le nonce pour la sécurité
+    check_ajax_referer('lightbox_nonce', 'security');
+
+    // Vérifier l'ID de la photo
+    $photo_id = isset($_POST['photo_id']) ? intval($_POST['photo_id']) : 0;
+    if ($photo_id === 0) {
+        wp_send_json_error('ID de la photo invalide.');
+        return;
+    }
+
+    // Récupérer les informations de la photo
+    $image_url = get_the_post_thumbnail_url($photo_id, 'full');
+    $reference = get_field('reference', $photo_id);
+    $category = wp_get_post_terms($photo_id, 'categorie')[0]->name ?? 'Non classé';
+
+    // Vérification de l'URL de l'image
+    if (!$image_url) {
+        wp_send_json_error('Aucune image trouvée pour cette photo.');
+        return;
+    }
+
+    // Envoyer la réponse en JSON
+    wp_send_json_success([
+        'id'        => $photo_id,
+        'url'       => $image_url,
+        'reference' => $reference,
+        'category'  => $category
+    ]);
+}
+
+// Enregistrer l'action AJAX pour les utilisateurs connectés et non connectés
+add_action('wp_ajax_get_photo_data', 'get_photo_data_ajax');
+add_action('wp_ajax_nopriv_get_photo_data', 'get_photo_data_ajax');

@@ -2,11 +2,11 @@
     <div class="lightbox-content">
 
         <button class="lightbox-close">
-            <i class="fa-solid fa-xmark"></i>
+        <span>x</span>
         </button>
 
         <button class="lightbox-prev" id="prevArrowLightbox">
-            <i class="fa-solid fa-arrow-left-long"></i><span class="description-photo">   Précédente</span>
+        <span><</span><span class="description-photo">   Précédente</span>
         </button>
 
         <div class="lightbox-image-container">
@@ -14,7 +14,7 @@
         </div>
 
         <button class="lightbox-next" id="nextArrowLightbox">
-            <span class="description-photo">Suivante   </span><i class="fa-solid fa-arrow-right-long"></i>
+            <span class="description-photo">Suivante   </span><span>></span>
         </button>
 
         <div class="lightbox-info">
@@ -23,8 +23,8 @@
             </span>
             <span class="lightbox-category description-photo">
                 <?php
-                // Récupérer la première catégorie associée à la taxonomie 'categorie'
-                $terms = get_the_terms(get_the_ID(), 'categorie');
+                // Récupérer la première catégorie associée à la taxonomie 'evenement'
+                $terms = get_the_terms(get_the_ID(), 'evenement');
                 if ($terms && !is_wp_error($terms)) {
                     echo esc_html($terms[0]->name);
                 }
@@ -33,4 +33,3 @@
         </div>
     </div>
 </div>
-

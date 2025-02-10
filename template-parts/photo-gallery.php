@@ -54,17 +54,25 @@
 
         // Boucle WordPress
         if ($query->have_posts()) :
-            while ($query->have_posts()) : $query->the_post(); ?>
+            while ($query->have_posts()) : $query->the_post();
+                $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
+                $photo_id = get_the_ID();
+                $photo_reference = get_field('reference', $photo_id, true);
+                // var_dump($photo_reference);
+                $category_terms = get_the_terms($photo_id, 'categorie');
+                $category_name = (!empty($category_terms) && !is_wp_error($category_terms)) ? $category_terms[0]->name : '';
+                ?>
                 <div class="photo-item">
-                    <?php
-                        if (has_post_thumbnail()) {
-                            $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
-                            $photo_id = get_the_ID(); // Récupérer l'ID de la photo
-                    ?>
-                    <a href="<?php echo esc_url(get_permalink($photo_id)); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
-                        <?php the_post_thumbnail('medium'); ?>
-                    </a>
-                    <?php } ?>
+                    <div class="photo-overlay">
+                        <a href="#" class="photo-expand"
+                        data-photo-id="<?php echo esc_attr($photo_id); ?>"
+                        data-url="<?php echo esc_url($thumbnail_url); ?>"
+                        data-reference="<?php echo esc_html($photo_reference); ?>"
+                        data-category="<?php echo esc_html($category_name); ?>">
+                            <?php the_post_thumbnail('medium'); ?>
+                            <span class="fullscreen-icon">🔍</span> <!-- Icône plein écran -->
+                        </a>
+                    </div>
                 </div>
             <?php endwhile;
         else :
@@ -76,7 +84,10 @@
         ?>
     </div>
 
-
     <!-- Bouton "Afficher plus" avec data-url -->
     <button id="load-more" class="btn-load-more" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">Afficher plus</button>
+    <?php get_template_part('template-parts/lightbox'); ?>
 </div>
+
+<!-- Inclure le script photo-gallery.js -->
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/js/photo-gallery.js"></script>
