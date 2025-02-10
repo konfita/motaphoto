@@ -1,35 +1,30 @@
-<div id="lightbox-overlay" class="lightbox-overlay" style="display: none;">
+<div id="lightbox-overlay" class="lightbox-overlay">
     <div class="lightbox-content">
 
-        <button class="lightbox-close">
-        <span>x</span>
+        <!-- Bouton de fermeture -->
+        <button class="lightbox-close" aria-label="Fermer la lightbox">
+            <span>x</span>
         </button>
 
-        <button class="lightbox-prev" id="prevArrowLightbox">
-        <span><</span><span class="description-photo">   Précédente</span>
+        <!-- Bouton précédent -->
+        <button class="lightbox-prev" id="prevArrowLightbox" aria-label="Photo précédente">
+            <span><</span><span class="description-photo"> Précédente</span>
         </button>
 
+        <!-- Conteneur d'image -->
         <div class="lightbox-image-container">
             <img src="" alt="" class="lightbox-image">
         </div>
 
-        <button class="lightbox-next" id="nextArrowLightbox">
-            <span class="description-photo">Suivante   </span><span>></span>
+        <!-- Bouton suivant -->
+        <button class="lightbox-next" id="nextArrowLightbox" aria-label="Photo suivante">
+            <span class="description-photo">Suivante</span><span>></span>
         </button>
 
+        <!-- Zone d'information -->
         <div class="lightbox-info">
-            <span class="lightbox-reference description-photo">
-                <?php echo esc_html(get_field('reference_photo')); ?>
-            </span>
-            <span class="lightbox-category description-photo">
-                <?php
-                // Récupérer la première catégorie associée à la taxonomie 'evenement'
-                $terms = get_the_terms(get_the_ID(), 'evenement');
-                if ($terms && !is_wp_error($terms)) {
-                    echo esc_html($terms[0]->name);
-                }
-                ?>
-            </span>
+            <span class="lightbox-reference description-photo"></span>
+            <span class="lightbox-category description-photo"></span>
         </div>
     </div>
 </div>

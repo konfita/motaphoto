@@ -1,39 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     console.log("Script chargé");
 
     const prevArrow = document.getElementById('prevArrowLightbox');
     const nextArrow = document.getElementById('nextArrowLightbox');
-
-    if (prevArrow) {
-        prevArrow.addEventListener('click', function (e) {
-            e.preventDefault(); // ✅ Empêche un comportement par défaut
-            console.log("Bouton Previous cliqué, action envoyée: get_previous_lightbox_photo_ajax");
-            handleArrowClick("get_next_lightbox_photo_ajax");
-        });
-    } else {
-        console.error("⚠ Erreur: prevArrow n'a pas été trouvé dans le DOM !");
-    }
-
-    if (nextArrow) {
-        nextArrow.addEventListener('click', function (e) {
-            e.preventDefault(); // ✅ Empêche un comportement par défaut
-            console.log("Bouton Next cliqué, action envoyée: get_next_lightbox_photo_ajax");
-            handleArrowClick("get_previous_lightbox_photo_ajax");
-        });
-    } else {
-        console.error("⚠ Erreur: nextArrow n'a pas été trouvé dans le DOM !");
-    }
-
+    const closeButton = document.querySelector('.lightbox-close');
+    const overlay = document.querySelector('.lightbox-overlay');
+    const content = document.querySelector('.lightbox-content');
+    
     function openLightbox(photoData) {
         console.log("Ouverture de la lightbox avec :", photoData);
 
         const lightboxOverlay = document.querySelector('.lightbox-overlay');
-        if (!lightboxOverlay) {
-            console.error("La lightbox n'existe pas dans le DOM.");
-            return;
-        }
-
         const image = document.querySelector('.lightbox-image');
         const reference = document.querySelector('.lightbox-reference');
         const category = document.querySelector('.lightbox-category');
@@ -44,8 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
             category.textContent = photoData.category;
             lightboxOverlay.dataset.currentPhotoId = photoData.id;
             lightboxOverlay.style.display = 'flex';
-        } else {
-            console.error("Éléments de la lightbox non trouvés.");
         }
     }
 
@@ -67,31 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleArrowClick(action) {
-        
-
-
         const currentPostId = document.querySelector('.lightbox-overlay')?.dataset.currentPhotoId;
-        console.log("handleArrowClick appelé avec :", action, "Post ID:", currentPostId);
-        console.log("Requête AJAX envoyée :", {
-            action: action,
-            security: lightbox_ajax_object.security,
-            post_id: currentPostId
-        });
-
-        
         if (!currentPostId) {
             console.error("Aucune photo actuelle détectée.");
             return;
         }
-
-        console.log("Données envoyées AJAX:", {
-            action: action, // ✅ Correction ici
-            security: lightbox_ajax_object.security,
-            post_id: currentPostId
-        });
-
-        console.log("Requête AJAX envoyée :", `action=${action}&security=${lightbox_ajax_object.security}&post_id=${currentPostId}`);
-
 
         fetch(lightbox_ajax_object.ajax_url, {
             method: 'POST',
@@ -101,15 +56,26 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log("Réponse AJAX complète :", data);
                 loadPhoto(data.data.url, data.data.id);
                 document.querySelector('.lightbox-reference').textContent = data.data.reference;
                 document.querySelector('.lightbox-category').textContent = data.data.category;
-            } else {
-                console.error('Erreur :', data.data);
             }
         })
         .catch(error => console.error('Erreur AJAX:', error));
+    }
+
+    if (prevArrow) {
+        prevArrow.addEventListener('click', function (e) {
+            e.preventDefault();
+            handleArrowClick("get_previous_lightbox_photo_ajax");
+        });
+    }
+
+    if (nextArrow) {
+        nextArrow.addEventListener('click', function (e) {
+            e.preventDefault();
+            handleArrowClick("get_next_lightbox_photo_ajax");
+        });
     }
 
     document.querySelectorAll('.photo-expand').forEach(item => {
@@ -117,8 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             const photoId = this.dataset.photoId;
-            console.log("Image cliquée, ID :", photoId);
-
             fetch(lightbox_ajax_object.ajax_url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -128,21 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     openLightbox(data.data);
-                } else {
-                    console.error('Erreur de récupération des données de la photo.');
                 }
             })
             .catch(() => console.error('Erreur AJAX.'));
         });
-    });
-
-    const closeButton = document.querySelector('.lightbox-close');
-    const overlay = document.querySelector('.lightbox-overlay');
-    const content = document.querySelector('.lightbox-content');
-
-    console.log("Vérification des boutons:", {
-        prevArrow: prevArrow,
-        nextArrow: nextArrow
     });
 
     if (closeButton) closeButton.addEventListener('click', closeLightbox);
@@ -151,9 +104,14 @@ document.addEventListener('DOMContentLoaded', function () {
         e.stopPropagation();
     });
 
+    document.querySelectorAll(".fullscreen-icon").forEach(icon => {
+        icon.addEventListener("click", function (e) {
+            e.preventDefault();
+            const parentLink = this.closest(".photo-expand");
+            if (parentLink) parentLink.click();
+        });
+    });
 });
-// Il attend que la page charge et sélectionne toutes les icônes "plein écran".
-// Quand on clique sur une icône 🔍, il simule un clic sur la photo, ce qui ouvre la lightbox.
 document.addEventListener("DOMContentLoaded", function () {
     const fullscreenIcons = document.querySelectorAll(".fullscreen-icon");
 
