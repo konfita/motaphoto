@@ -76,6 +76,7 @@
         ?>
     </div>
 
+
     <!-- Bouton "Afficher plus" avec data-url -->
     <button id="load-more" class="btn-load-more" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">Afficher plus</button>
 </div>

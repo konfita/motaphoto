@@ -104,7 +104,7 @@ add_action('init', 'register_photos_cpt');
 // Enregistrement des scripts et localisation AJAX
 function motaphoto_enqueue_scripts() {
     wp_enqueue_script('load-more-photos', get_stylesheet_directory_uri() . '/js/load-more.js', array('jquery'), null, true);
-
+    
     wp_localize_script('load-more-photos', 'ajax_params', array(
         'ajax_url' => admin_url('admin-ajax.php'),
     ));
@@ -147,6 +147,8 @@ function load_more_photos() {
 
 add_action('wp_ajax_load_more_photos', 'load_more_photos');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
+
+
 
 // Fonction pour filtrer et charger des photos via AJAX
 function load_and_filter_photos() {
