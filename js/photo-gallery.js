@@ -112,16 +112,31 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const fullscreenIcons = document.querySelectorAll(".fullscreen-icon");
 
     fullscreenIcons.forEach(icon => {
-        icon.addEventListener("click", function (e) {
-            e.preventDefault(); // Empêche le lien de changer de page
+        icon.addEventListener("click", function (event) {
+            event.preventDefault(); // Empêcher l'action par défaut
 
-            const parentLink = this.closest(".photo-expand"); // Trouver le lien parent
-            if (parentLink) {
-                parentLink.click(); // Simuler un clic sur la photo pour ouvrir la lightbox
+            // Récupérer les données de la photo
+            const photoId = this.getAttribute("data-photo-id");
+            const photoUrl = this.getAttribute("data-url");
+            const photoReference = this.getAttribute("data-reference");
+            const photoCategory = this.getAttribute("data-category");
+
+            // Vérifier si la lightbox existe
+            const lightbox = document.querySelector("#lightbox"); 
+            if (lightbox) {
+                // Mise à jour de l'image dans la lightbox
+                lightbox.querySelector(".lightbox-image").src = photoUrl;
+                lightbox.querySelector(".lightbox-reference").textContent = photoReference;
+                lightbox.querySelector(".lightbox-category").textContent = photoCategory;
+
+                // Afficher la lightbox
+                lightbox.classList.add("visible");
             }
         });
     });

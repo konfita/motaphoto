@@ -58,22 +58,31 @@
                 $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
                 $photo_id = get_the_ID();
                 $photo_reference = get_field('reference', $photo_id, true);
-                // var_dump($photo_reference);
                 $category_terms = get_the_terms($photo_id, 'categorie');
                 $category_name = (!empty($category_terms) && !is_wp_error($category_terms)) ? $category_terms[0]->name : '';
                 ?>
                 <div class="photo-item">
                     <div class="photo-overlay">
-                        <a href="#" class="photo-expand"
-                        data-photo-id="<?php echo esc_attr($photo_id); ?>"
-                        data-url="<?php echo esc_url($thumbnail_url); ?>"
-                        data-reference="<?php echo esc_html($photo_reference); ?>"
-                        data-category="<?php echo esc_html($category_name); ?>">
-                            <?php the_post_thumbnail('medium'); ?>
-                            <span class="fullscreen-icon">🔍</span> <!-- Icône plein écran -->
+                        <?php the_post_thumbnail('medium'); ?>
+
+                        <!-- Icône plein écran : ouverture de la lightbox -->
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/icon_fullscreen.png" 
+                            alt="Plein écran" 
+                            class="fullscreen-icon" 
+                            data-photo-id="<?php echo esc_attr($photo_id); ?>"
+                            data-url="<?php echo esc_url($thumbnail_url); ?>" 
+                            data-reference="<?php echo esc_html($photo_reference); ?>"
+                            data-category="<?php echo esc_html($category_name); ?>">
+
+                        <!-- Icône œil : redirection vers la page single-photo-template.php -->
+                        <a href="<?php echo get_permalink(); ?>">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/eye_icon.png" 
+                                alt="Voir la photo" 
+                                class="eye-icon">
                         </a>
                     </div>
                 </div>
+
             <?php endwhile;
         else :
             echo '<p>Aucune photo trouvée.</p>';
@@ -90,4 +99,4 @@
 </div>
 
 <!-- Inclure le script photo-gallery.js -->
-<script src="<?php echo get_stylesheet_directory_uri(); ?>/js/photo-gallery.js"></script>
+<script src="<
