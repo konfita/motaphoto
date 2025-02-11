@@ -126,15 +126,45 @@ function load_more_photos() {
         while ($query->have_posts()) {
             $query->the_post(); ?>
             <div class="photo-item">
+                <div class="photo-overlay">
                     <?php
                         if (has_post_thumbnail()) {
                             $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full'); // URL de l'image pleine résolution
                             $photo_id = get_the_ID(); // Récupérer l'ID de la photo
+                            $category_name = (!empty($category_terms) && !is_wp_error($category_terms)) ? $category_terms[0]->name : '';
+                            $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                            $photo_reference = get_field('reference', $photo_id, true);
+                            $category_terms = get_the_terms($photo_id, 'categorie');
+                            $category_name = (!empty($category_terms) && !is_wp_error($category_terms)) ? $category_terms[0]->name : '';
                     ?>
-                    <a href="<?php echo esc_url(get_permalink($photo_id)); ?>" data-lightbox="gallery" data-title="<?php echo esc_attr(get_the_title()); ?>">
-                        <?php the_post_thumbnail('medium'); ?>
-                    </a>
+                    
+                    <?php the_post_thumbnail('medium'); ?>
+                    <!-- Icône plein écran (lightbox)  -->
+
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/icon_fullscreen.png" 
+                            alt="Plein écran" 
+                            class="fullscreen-icon" 
+                            data-photo-id="<?php echo esc_attr($photo_id); ?>"
+                            data-url="<?php echo esc_url($thumbnail_url); ?>" 
+                            data-reference="<?php echo esc_html($photo_reference); ?>"
+                            data-category="<?php echo esc_html($category_name); ?>">
+
+                    <!-- Icône œil (lien vers single-photo-template.php)  -->
+                        <a href="<?php echo get_permalink(); ?>">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/eye_icon.png" 
+                                alt="Voir la photo" 
+                                class="eye-icon">
+                        </a>
+                        <div class="info-photo">
+                            <div class="titre-left">
+                            <?php the_title(); ?>
+                            </div>
+                            <div class="categorie-right">
+                                <?php echo esc_html($category_name); ?>
+                            </div>
+                        </div>
                     <?php } ?>
+                </div>
             </div>
         <?php }
     } else {

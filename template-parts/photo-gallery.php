@@ -45,7 +45,8 @@
                     <div class="photo-overlay">
                         <?php the_post_thumbnail('medium'); ?>
 
-                        <!-- Icône plein écran (lightbox) -->
+                        <!-- Icône plein écran (lightbox)  -->
+
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/icon_fullscreen.png" 
                             alt="Plein écran" 
                             class="fullscreen-icon" 
@@ -54,7 +55,7 @@
                             data-reference="<?php echo esc_html($photo_reference); ?>"
                             data-category="<?php echo esc_html($category_name); ?>">
 
-                        <!-- Icône œil (lien vers single-photo-template.php) -->
+                        <!-- Icône œil (lien vers single-photo-template.php)  -->
                         <a href="<?php echo get_permalink(); ?>">
                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/eye_icon.png" 
                                 alt="Voir la photo" 
@@ -68,6 +69,7 @@
                                 <?php echo esc_html($category_name); ?>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             <?php endwhile;
