@@ -272,12 +272,6 @@ nav li:hover {
     justify-content: center;
 }
 
-/* Overlay sur les photos */
-.photo-item {
-    position: relative;
-}
-
-
 /* Bouton "Afficher plus" */
 .btn-load-more {
     margin-top: 20px;
@@ -1142,41 +1136,59 @@ nav li:hover {
 
 /* Style de l'icône "plein écran" */
 /* Positionner l'icône plein écran en haut à droite */
-/* Icône plein écran cachée par défaut */
-.fullscreen-icon {
+/* Icône plein écran */
+.photo-item .fullscreen-icon {
     position: absolute;
     top: 10px;
-    right: 10px;
-    width: 24px;
+    left: 520px;
+    width: 50px;
     height: auto;
     cursor: pointer;
-    opacity: 0; /* Caché par défaut */
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Icône œil cachée par défaut */
-.eye-icon {
+/* Icône œil */
+.photo-item .eye-icon {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30px;
+    width: 50px;
     height: auto;
     cursor: pointer;
-    opacity: 0; /* Caché par défaut */
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Afficher les icônes au survol de la photo */
+/* Afficher les icônes au survol */
 .photo-item:hover .fullscreen-icon,
-.photo-item:hover .eye-icon {
-    opacity: 1; /* Affichage au survol */
+.photo-item:hover .eye-icon,
+.photo-item:hover .info-photo {
+    opacity: 1;
 }
 
+/* info sur la photo  */
+.info-photo {
+    position: absolute;
+    bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    gap: 300px;
+    color: white;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
 
-
-/* Conteneur photo */
-.photo-item {
-    position: relative; /* Nécessaire pour positionner les icônes au-dessus de la photo */
-  }
-  
+.titre-left {
+    left: 0px;
+}
+.categorie-right {
+    right: 0px;
+}

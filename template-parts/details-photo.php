@@ -1,5 +1,5 @@
 <?php 
-    // Récupération des ctaxonomies
+    // Récupération des taxonomies
     $categorie_terms = get_the_terms(get_the_ID(), 'categorie');
     $format_terms = get_the_terms(get_the_ID(), 'format');
 
