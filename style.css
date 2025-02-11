@@ -753,21 +753,7 @@ nav li:hover {
         align-items: center;
     }
     /* Header */
-    .site-header {
-        padding: 10px 20px;
-    }
-
-    .logo-container img {
-        max-height: 15px;
-    }
-
-    .main-navigation ul li {
-        margin: 0 10px;
-    }
-
-    .main-navigation ul li a {
-        font-size: 14px;
-    }
+    
 
     /* Hero Section */
     .hero {
@@ -947,8 +933,6 @@ nav li:hover {
 /* ------------------------------------
    Bouton burger
 ------------------------------------ */
-/* Menu responsive */
-/* Style du bouton du menu burger */
 .menu-toggle {
     display: none; /* Caché par défaut */
     background: none;
@@ -980,7 +964,7 @@ nav li:hover {
     top: -8px;
 }
 
-   .menu-toggle {
+.menu-toggle {
     display: inline-block;
     cursor: pointer;
     border: none;
@@ -988,75 +972,80 @@ nav li:hover {
     position: relative;
     width: 40px;
     height: 40px;
-  }
-  
-  /* Les trois barres du hamburger : 
-     on les crée via la classe .hamburger */
-  .menu-toggle .hamburger,
-  .menu-toggle .hamburger::before,
-  .menu-toggle .hamburger::after {
+    z-index: 1001; /* S'assurer qu'il est au-dessus du menu */
+}
+
+.menu-toggle .hamburger,
+.menu-toggle .hamburger::before,
+.menu-toggle .hamburger::after {
     display: block;
-    /* width: 100%;
-    height: 4px; */
     background-color: #000; /* couleur des barres */
     position: absolute;
     transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
-  }
-  
-  /* Barre du haut : on la positionne ~10px au-dessus de la barre du milieu */
-  .menu-toggle .hamburger::before {
+}
+
+.menu-toggle .hamburger::before {
     top: -8px;
-  }
-  
-  /* Barre du bas : on la positionne ~10px en-dessous de la barre du milieu */
-  .menu-toggle .hamburger::after {
+}
+
+.menu-toggle .hamburger::after {
     bottom: -8px;
-  }
-  
-  /* ------------------------------------
-     Quand on ouvre le menu (.open)
-  ------------------------------------ */
-  
-  /* La barre du milieu disparaît visuellement */
-  .menu-toggle.open .hamburger {
+}
+
+.menu-toggle.open .hamburger {
     background-color: transparent;
-  }
-  
-  /* Barre du haut devient un slash \ */
-  .menu-toggle.open .hamburger::before {
-    top: 0; /* on la ramène au niveau de la barre du milieu */
+}
+
+.menu-toggle.open .hamburger::before {
+    top: 0;
     transform: rotate(45deg);
-  }
-  
-  /* Barre du bas devient un slash / */
-  .menu-toggle.open .hamburger::after {
+}
+
+.menu-toggle.open .hamburger::after {
     bottom: 0;
     transform: rotate(-45deg);
-  }
-  
-  /* ------------------------------------
-     Navigation (responsive)
-  ------------------------------------ */
-  .main-navigation {
+}
+
+/* ------------------------------------
+   Navigation (responsive)
+------------------------------------ */
+.main-navigation {
     display: none;
-  }
-  
-  .main-navigation.open {
-    display: block;
-    background: #fff;
-  }
-  
-  @media (min-width: 768px) {
+}
+
+.main-navigation.open {
+    display: flex;
+    background: rgb(186, 45, 45); /* Fond rouge */
+    position: fixed;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-navigation.open a {
+    color: white; /* Texte blanc */
+    text-align: center;
+    font-size: 32px;
+    margin: 10px 0;
+    padding-top: 20px;
+}
+
+@media (min-width: 768px) {
     .menu-toggle {
-      display: none;
+        display: none;
     }
     .main-navigation {
-      display: block;
+        display: block;
     }
-  }
+}
   
 
-  /* lightbox */ 
+/* lightbox */ 
   /* Overlay noir transparent */
 .lightbox-overlay {
     position: fixed;
